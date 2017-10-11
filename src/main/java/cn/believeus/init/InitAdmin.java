@@ -19,7 +19,7 @@ public class InitAdmin implements ApplicationListener<ApplicationEvent>{
 	public void onApplicationEvent(ApplicationEvent event) {
 		// tomcat启动完毕调用该方法
 		if(event instanceof ContextRefreshedEvent){
-			Admin admin = (Admin)mysqlService.findObject(Admin.class, "admin", "admin");
+			Admin admin = (Admin)mysqlService.findObject(Admin.class, "username", "admin");
 			if(admin == null){
 				 admin = new Admin();
 				 admin.setUsername("admin");

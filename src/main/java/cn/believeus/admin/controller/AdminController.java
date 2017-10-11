@@ -22,7 +22,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/login")
-	public String admin(){
+	public String login(){
 		return "/WEB-INF/back/login.jsp";
 	}
 	
