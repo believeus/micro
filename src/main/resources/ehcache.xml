@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" 
          updateCheck="false" dynamicConfig="false">
-	<diskStore path="C:/workspace/data/cache/osmusic" />
+	<diskStore path="C:/workspace/data/cache/micro" />
 	<defaultCache maxElementsInMemory="10000" 
 		eternal="false"
 		timeToIdleSeconds="1000"  

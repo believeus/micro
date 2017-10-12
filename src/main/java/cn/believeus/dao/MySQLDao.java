@@ -211,7 +211,21 @@ public class MySQLDao extends HibernateDaoSupport {
 					}
 				});
 	}
-
+	public List<?> findObjectList(final Class<?> clazz,final String property,final String value,final Integer num) {
+		return (List<?>) getHibernateTemplate().execute(
+				new HibernateCallback<Object>() {
+					
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						String hql = "from " + clazz.getName()+" where "+property+"='"+value+"'";
+						Query query = session.createQuery(hql);
+						query.setFirstResult(0);
+						query.setMaxResults(num);
+						List<?> list = query.list();
+						return list;
+					}
+				});
+	}
 	
 	public List<?> findObjectList(final Class<?> clazz, final String property,
 			final Object value, final int num) {
@@ -231,7 +245,23 @@ public class MySQLDao extends HibernateDaoSupport {
 					}
 				});
 	}
+   public List<?> findColumnValue(final Class<?> clazz,final String column,final String prop,final Object val,final int num){
+	   return (List<?>) getHibernateTemplate().execute(
+				new HibernateCallback<Object>() {
 
+					
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						String hql = "select "+column+" from " + clazz.getName()+ " as entity where entity." + prop + " =:value";
+						Query query = session.createQuery(hql);
+						query.setParameter("value", val);
+						query.setFirstResult(0);
+						query.setMaxResults(num);
+						List<?> list = query.list();
+						return list;
+					}
+				});
+   }
 	
 	public List<?> findObjectList(final String hql, final Integer num) {
 		Assert.assertNotNull(num);

@@ -10,7 +10,16 @@
 	</welcome-file-list>
 	<!-- end Name:wuqiwei Data:2013-319 Email:1058633117@qq.com AddReason: 主页面使用index.do的请求实现MVC的效果 -->
 	
-	
+	<!--Begin Name:wuqiwei Date:2013-10-3 23:06:02 AddReason:使用shiro安全框架 -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!--Begin Name:wuqiwei Date:2013-10-3 23:06:02 AddReason:使用shiro安全框架 -->
 	
 	<!--Begin 这是Spring中的一个编码过滤器 设置每次请求的request请求解码的类型为UTF-8 -->
 	<filter>
@@ -50,7 +59,12 @@
 		<filter-name>hibernateFilter</filter-name>
 		<url-pattern>*.jhtml</url-pattern>
 	</filter-mapping>
-	
+	<!--Begin Name:wuqiwei Date:2013-10-3 23:11:24 AddReason:使用shiro对后台权限控制 -->
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+	<!--End Name:wuqiwei Date:2013-10-3 23:11:24 AddReason:使用shiro对后台权限控制 -->
 	
 	
 	<filter-mapping>

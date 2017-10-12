@@ -3,10 +3,11 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+ <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!doctype html>
 <html lang="en">
 <head>
-	 <base href="<%=basePath%>">
+	<base href="<%=basePath%>">
 	<meta charset="UTF-8">
 	<title>分布式师徒积分制管理系统</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -20,15 +21,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="static/public/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
-
+	
 </head>
 <body class="login-bg">
-    
+     <!-- Begin Name:wuqiwei 此处必须加：不加验证之后就不能表单提交了,所以如果已经验证直接跳转到/admin/login.jhtml页面 -->
+     <shiro:authenticated>
+      <script type="text/javascript">
+        window.location.href ="admin/login.jhtml";
+      </script>
+	</shiro:authenticated>
+	<!-- End Name:wuqiwei 此处必须加：不加验证之后就不能表单提交了,所以如果已经验证直接跳转到/admin/login.jhtml页面 -->
     <div class="login">
-        <div class="message">分布式师徒积分制管理系统</div>
+        <div class="message" style="font-size: 22px;padding: 18px 10px 19px 18px;">
+        	大悟智课分布式师徒积分制管理系统
+        </div>
         <div id="darkbannerwrap"></div>
         
-        <form method="post" class="layui-form" >
+        <form method="post" class="layui-form"  action="admin/loginView.jhtml">
             <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
@@ -39,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <script>
-        $(function  () {
+       /*  $(function  () {
             layui.use('form', function(){
               var form = layui.form;
               // layer.msg('玩命卖萌中', function(){
@@ -49,13 +58,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               form.on('submit(login)', function(data){
                 // alert(888)
                 layer.msg(JSON.stringify(data.field),function(){
-                    location.href='index.html'
+                    location.href='admin/login.jhtml'
                 });
                 return false;
               });
             });
         })
-
+ */
         
     </script>
 

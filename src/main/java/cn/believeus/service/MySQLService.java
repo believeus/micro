@@ -7,7 +7,7 @@ import cn.believeus.PaginationUtil.Page;
 import cn.believeus.PaginationUtil.Pageable;
 import cn.believeus.dao.MySQLDao;
 
-@Service(value="mysqlService")
+@Service(value="service")
 public class MySQLService{
 	@Resource
 	private MySQLDao mysqlDao;
@@ -76,13 +76,17 @@ public class MySQLService{
 		return mysqlDao.findObjectList(clazz, num);
 	}
 
-	
+	public List<?> findObjectList(final Class<?> clazz,final String property,final String value,final Integer num){
+		return mysqlDao.findObjectList(clazz, property,value,num);
+	}
 	
 	public List<?> findObjectList(Class<?> clazz, String property,
 			Object value, int num) {
 		return mysqlDao.findObjectList(clazz, property, value, num);
 	}
-
+	 public List<?> findColumnValue(final Class<?> clazz,final String column,final String prop,final Object val,final int num){
+		 return mysqlDao.findColumnValue(clazz, column, prop, val, num);
+	 }
 	public List<?> findObjectList(String hql, Integer num) {
 		return mysqlDao.findObjectList(hql,num);
 	}

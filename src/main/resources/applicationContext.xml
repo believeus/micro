@@ -14,5 +14,6 @@
 	</context:component-scan>
 	<import resource="applicationContext-datasource.xml"/>
 	<import resource="applicationContext-hibernateTemplate.xml"/>
-
+	<import resource="applicationContext-shiro.xml"/>
+	<import resource="applicationContext-cached.xml"/>
 </beans>

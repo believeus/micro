@@ -1,45 +1,96 @@
 package cn.believeus.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table
-public class Tuser extends TbaseEntity{
+public class Tuser extends TbaseEntity {
 
 	private static final long serialVersionUID = -7459216849514123828L;
-	/**注册用户名*/
+	/** 注册用户名 */
 	private String username;
-	/**注册密码*/
+	/** 注册密码 */
 	private String password;
-	/**注册邮箱*/
-	private String email;
-	/** 用户的积分*/
-	private Integer coins;
-	
+	private String sex;
+	/** 联系方式 */
+	private String contact;
+	/** 籍贯 */
+	private String provice;
+	/** 用户的当前积分 */
+	private Integer value;
+	/** 紧急联系电话 */
+	private String urgentPhone;
+	/** 紧急联系人 */
+	private String urgentContact;
+
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Integer getCoins() {
-		return coins;
+
+	public String getContact() {
+		return contact;
 	}
-	public void setCoins(Integer coins) {
-		this.coins = coins;
+
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
-	public String getEmail() {
-		return email;
+
+	public String getProvice() {
+		return provice;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setProvice(String provice) {
+		this.provice = provice;
 	}
-	
+
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+	public String getUrgentPhone() {
+		return urgentPhone;
+	}
+
+	public void setUrgentPhone(String urgentPhone) {
+		this.urgentPhone = urgentPhone;
+	}
+
+	public String getUrgentContact() {
+		return urgentContact;
+	}
+
+	public void setUrgentContact(String urgentContact) {
+		this.urgentContact = urgentContact;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 }
