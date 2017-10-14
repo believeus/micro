@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.believeus.model.Ttask;
+import cn.believeus.model.TuserEvent;
 import cn.believeus.service.MySQLService;
 
 
@@ -24,6 +25,15 @@ public class TaskController {
 		List<?> taskList=service.findObjectList(Ttask.class, 10);
 		modelView.addObject("tasklist", taskList);
 		modelView.setViewName("/WEB-INF/back/task/list.jsp");
+		return modelView;
+	}
+	
+	@RequestMapping("/admin/task/review")
+	public ModelAndView review() {
+		ModelAndView modelView=new ModelAndView();
+		List<?> userEventList=service.findObjectList(TuserEvent.class, 10);
+		modelView.addObject("userEventList", userEventList);
+		modelView.setViewName("/WEB-INF/back/task/review.jsp");
 		return modelView;
 	}
 }

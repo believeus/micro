@@ -29,8 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-         <input name="eventId" value="${eventId}" type="hidden">
-         <input name="userId" value="${userId}" type="hidden">
+         <input name="userEventId" value="${userEventId}" type="hidden">
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>申请驳回原因:
@@ -42,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">申请驳回</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">申请仲裁</button>
           </div>
       </form>
     </div>
