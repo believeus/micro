@@ -8,9 +8,12 @@ import javax.persistence.ManyToOne;
 public class Ttask extends TbaseEntity {
 	private static final long serialVersionUID = 2383130461826433412L;
 	private String title;
-	private String endTime;
+	private String begintime;
+	private String endtime;
 	private String value;
 	private Tuser user;
+	private String message;
+
 	public String getTitle() {
 		return title;
 	}
@@ -19,12 +22,20 @@ public class Ttask extends TbaseEntity {
 		this.title = title;
 	}
 
-	public String getEndTime() {
-		return endTime;
+	public String getBegintime() {
+		return begintime;
 	}
 
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setBegintime(String begintime) {
+		this.begintime = begintime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 
 	public String getValue() {
@@ -34,6 +45,15 @@ public class Ttask extends TbaseEntity {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "fk_userId", referencedColumnName = "id")
 	public Tuser getUser() {
@@ -43,5 +63,5 @@ public class Ttask extends TbaseEntity {
 	public void setUser(Tuser user) {
 		this.user = user;
 	}
-	
+
 }

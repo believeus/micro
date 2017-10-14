@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          <tr>
 	            <th>学员名</th>
 	            <th>事件名</th>
-	            <th>申请驳回信息</th>
+	            <th>事件发生时间</th>
 	            <th>积分值</th>
 	            <th>状态</th>
 	            <th>操作</th>
@@ -61,36 +61,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        	<tr>
 		        		<td>${userEvent.username}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
 		        		<td>${userEvent.title}</td>
-		        		<td>${userEvent.message}</td>
+		        		<td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
 		        		<td>${userEvent.value}</td>
-		        		<td style="width: 160px;">
-		        			<div class="layui-input-inline" >
-			                  <select id="status"  name="status" class="valid">
-			                    <option value="管理员审核中">管理员审核中</option>
-			                    <option value="邀约仲裁面谈">邀约仲裁面谈</option>
-			                    <option value="酌情减分">酌情减分</option>
-			                    <option value="证据确凿已定案">证据确凿已定案</option>
-			                  </select>
-		             		</div>
-		        		</td>
+		        		<td>${userEvent.status}</td>
 		        		<td class="td-manage">
-			              <a href="javascript:;"  onclick="del(this,${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
+		        		  
+		        		  <c:choose>
+		        		  	<c:when test="${userEvent.status != '证据确凿定案' }">
+		        		    	<a href="javascript:;"  onclick="del(this,${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
+		        		    	<a href="javascript:;"  onclick="x_admin_show('编辑','admin/review/editview.jhtml?userEventId=${userEvent.id}',500,450)" >[详情]</a>
+		        		  	</c:when>
+		        		  	<c:otherwise>
+		        		  		<a href="javascript:;" >已定案不得操作</a>
+		        		    </c:otherwise>
+		        		   
+		        		  </c:choose>
+		        		  
+			             
 		            	</td>
 		        	</tr>
 		         </c:forEach>
 	        </tbody>
 	      </table>
       </form>
-      <script>
-	      $(function(){
-	    	  $('#status').change(function(){
-	    	    alert($(this).children('option:selected').val());
-		    	var p1=$(this).children('option:selected').val();//这就是selected的值
-		    	var p2=$('#param2').val();//获取本页面其他标签的值
-		    	
-	    	  });
-    	 }) 
-      </script>
+      
       <div class="page">
         <div>
           <a class="prev" href="">&lt;&lt;</a>
@@ -113,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $.post(url,function(){
 	            	 $(obj).parents("tr").remove();
 	                 layer.msg('已删除!',{icon:1,time:1000});
-	                 parent.location.reload();
+	                 window.location.reload();
            	 }
             );
             

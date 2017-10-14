@@ -55,11 +55,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td> 
                           	
                           	<c:choose>
-                          		<c:when test="${userEvent.status eq '申请仲裁'}">
-                          			|<a href="javascript:;" onclick="x_admin_show('申请仲裁信息填写','admin/stu/disagreeView.jhtml?userId=${userId}&userEventId=${userEvent.id}',450,300)" >&nbsp;&nbsp;[申请仲裁]</a>
+                          		<c:when test="${userEvent.status eq '事件发生'}">
+                          			<a href="javascript:;" onclick="x_admin_show('申请仲裁信息填写','admin/stu/disagreeView.jhtml?userId=${userId}&userEventId=${userEvent.id}',450,300)" >&nbsp;&nbsp;[申请仲裁]</a>
                           		</c:when>
                           		<c:otherwise>
-                          			|<a href="javascript:;" >[${userEvent.status}]</a>
+                          			<a href="javascript:;" >[${userEvent.status}]</a>
                           		</c:otherwise>
                           	</c:choose>
                         	

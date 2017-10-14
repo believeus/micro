@@ -44,7 +44,7 @@ public class StuController {
 	}
 	
 	@RequestMapping("/admin/stu/saveOrUpdata")
-	public @ResponseBody String saveOrUpdata(Tuser user){
+	public @ResponseBody String update(Tuser user){
 		service.saveOrUpdate(user);
 		return "true";
 	}
@@ -80,22 +80,15 @@ public class StuController {
 		userEvent.setObserver(username);
 		userEvent.setValue(event.getValue());
 		//审核状态
-		userEvent.setStatus("申请仲裁");
+		userEvent.setStatus("事件发生");
 		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
-		int value=user.getValue()+Integer.parseInt(event.getValue());
-		user.setValue(value);
 		userEvent.setUsername(user.getUsername());
-		service.saveOrUpdate(user);
 		service.saveOrUpdate(userEvent);
 		return "true";
 	}
 	@RequestMapping("/admin/stu/delBindEvent")
 	public @ResponseBody String delBindEvent(int userEventId){
 		TuserEvent userEvent = (TuserEvent)service.findObject(TuserEvent.class, userEventId);
-		int value =Integer.parseInt(userEvent.getValue());
-		Tuser user=(Tuser)service.findObject(Tuser.class, userEvent.getUserId());
-		user.setValue(user.getValue()-value);
-		service.saveOrUpdate(user);
 		service.delete(userEvent);
 		return "true";
 	}
@@ -113,7 +106,7 @@ public class StuController {
 	public @ResponseBody String disagree(int userEventId,String message){
 		TuserEvent userEvent = (TuserEvent)service.findObject(TuserEvent.class, userEventId);
 		userEvent.setMessage(message);
-		userEvent.setStatus("仲裁申请审核中");
+		userEvent.setStatus("管理员审核中");
 		service.saveOrUpdate(userEvent);
 		return "true";
 	}
