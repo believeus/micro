@@ -90,6 +90,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li >
                 </ul>
             </li>
+             <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>任务大厅</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="admin/task/list.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>任务大厅</cite>
+                        </a>
+                    </li>
+                     <li>
+                        <a _href="admin/task/list.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>仲裁大厅</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
       </div>
     </div>

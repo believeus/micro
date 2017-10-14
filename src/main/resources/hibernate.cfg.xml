@@ -30,6 +30,8 @@
 		<mapping class="cn.believeus.model.Tevent"/>
 		<mapping class="cn.believeus.model.Tuser"/>
 		<mapping class="cn.believeus.model.TuserEvent"/>
+		<mapping class="cn.believeus.model.Treject"/>
+		<mapping class="cn.believeus.model.Ttask"/>
 	</session-factory>
 
 </hibernate-configuration>

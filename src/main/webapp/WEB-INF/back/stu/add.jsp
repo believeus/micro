@@ -58,10 +58,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
            <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>籍贯:
+                  <span class="x-red">*</span>状态:
               </label>
-              <div class="layui-input-inline">
-                  <input id="L_pass" name="provice"  lay-verify="required"  autocomplete="off" class="layui-input">
+               <div class="layui-input-inline">
+                  <select  name="status" class="valid">
+                    <option value="考核期">考核期</option>
+                    <option value="缓冲期">缓冲期</option>
+                    <option value="学习期">学习期</option>
+                    <option value="请假">请假</option>
+                    <option value="缓冲期退费">缓冲期退费</option>
+                    <option value="毕业">毕业</option>
+                  </select>
               </div>
           </div>
           <div class="layui-form-item">

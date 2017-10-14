@@ -52,7 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			            <th>事件名</th>
 			            <th>类型</th>
 			            <th>分数值</th>
-			            <th>时间</th>
 			            <th>操作</th>
 			          </tr>
 			        </thead>
@@ -62,8 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				            <th>${event.title}</th>
 				            <th>${event.type}</th>
 				            <th>${event.value}</th>
-				            <th>${event.editTime}</th>
-				            <th><a href="javascript:;" onclick="bindEvent('${sessionScope.sessionUser.username}',${sessionScope.sessionUser.id},${event.id})">[绑定]</a></th>
+				            <th><a href="javascript:;" onclick="bindEvent('${sessionScope.sessionUser.username}',${userId},${event.id})">[绑定]</a></th>
 			          </tr>
                       </c:forEach>
                     </tbody>

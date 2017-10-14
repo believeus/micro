@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>姓名:
               </label>
               <div class="layui-input-inline">
-                  <input value=${user.username } name="username" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input value="${user.username}" name="username" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">

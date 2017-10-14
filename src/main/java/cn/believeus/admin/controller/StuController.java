@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.believeus.model.Tevent;
 import cn.believeus.model.Tuser;
 import cn.believeus.model.TuserEvent;
+import cn.believeus.model.Treject;
 import cn.believeus.service.MySQLService;
 
 @Controller
@@ -54,7 +55,8 @@ public class StuController {
 		ModelAndView modelView=new ModelAndView();
 		List<?> userEventList=service.findObjectList(TuserEvent.class, "userId", userId,15);
 		modelView.setViewName("/WEB-INF/back/stu/eventlist.jsp");
-		modelView.addObject("vList", userEventList);
+		modelView.addObject("userEventList", userEventList);
+		modelView.addObject("userId", userId);
 		return modelView;
 	}
 	
@@ -64,6 +66,7 @@ public class StuController {
 		List<?> eventList = service.findObjectList(Tevent.class, 8);
 		modelView.setViewName("/WEB-INF/back/stu/bindevent.jsp");
 		modelView.addObject("vList",eventList);
+		modelView.addObject("userId", userId);
 		return modelView;
 	}
 	
@@ -77,7 +80,49 @@ public class StuController {
 		userEvent.setType(event.getType());
 		userEvent.setObserver(username);
 		userEvent.setValue(event.getValue());
+		//审核状态
+		userEvent.setStatus("申请仲裁");
+		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
+		int value=user.getValue()+Integer.parseInt(event.getValue());
+		user.setValue(value);
+		service.saveOrUpdate(user);
 		service.saveOrUpdate(userEvent);
+		return "true";
+	}
+	@RequestMapping("/admin/stu/delBindEvent")
+	public @ResponseBody String delBindEvent(int userId,int eventId){
+		TuserEvent userEvent = (TuserEvent)service.findObject(TuserEvent.class, eventId);
+		int value =Integer.parseInt(userEvent.getValue());
+		Tuser user=(Tuser)service.findObject(Tuser.class, userId);
+		user.setValue(user.getValue()-value);
+		service.saveOrUpdate(user);
+		service.delete(userEvent);
+		return "true";
+	}
+	/**申请驳回页面*/
+	@RequestMapping("/admin/stu/disagreeView")
+	public ModelAndView disagreeView(int userId,int eventId){
+		ModelAndView modelView=new ModelAndView();
+		modelView.addObject("userId",userId);
+		modelView.addObject("eventId",eventId);
+		modelView.setViewName("/WEB-INF/back/stu/unAgree.jsp");
+		return modelView;
+	}
+	
+	/**不同意*/
+	@RequestMapping("/admin/stu/disagree")
+	public @ResponseBody String disagree(Treject reject){
+		ModelAndView modelView=new ModelAndView();
+		int eventId = reject.getEventId();
+		int userId = reject.getUserId();
+		TuserEvent userEvent =(TuserEvent)service.findObject(TuserEvent.class, eventId);
+		Tuser user =(Tuser)service.findObject(Tuser.class, userId);
+		reject.setTitle(userEvent.getTitle());
+		reject.setUsername(user.getUsername());
+		userEvent.setStatus("管理员审核中");
+		service.saveOrUpdate(userEvent);
+		service.saveOrUpdate(reject);
+		modelView.addObject("reject", reject);
 		return "true";
 	}
 }

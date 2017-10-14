@@ -41,18 +41,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			            <th>分数值</th>
 			            <th>发生时间</th>
 			            <th>纠察员</th>
-			            <th>操作</th>
+			            <th>状态</th>
 			          </tr>
 			        </thead>
                     <tbody>
-                     <c:forEach var="event" items="${vList}">
+                     <c:forEach var="userEvent" items="${userEventList}">
                      	<tr>
-                        <td>${event.title}</div></td>
-                        <td>${event.type }</div></td>
-                        <td>${event.value}</div></td>
-                        <td><date:date value="${event.createTime}" pattern="yyyy-MM-dd"></date:date></td>
-                        <td>${event.observer}</td>
-                        <td>删除</td>
+                        <td>${userEvent.title}</td>
+                        <td>${userEvent.type }</td>
+                        <td>${userEvent.value}</td>
+                        <td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
+                        <td>${userEvent.observer}</td>
+                        <td> 
+                          	<a href="javascript:;"  onclick="del(this,${userId},${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
+                          	<c:choose>
+                          		<c:when test="${userEvent.status eq '申请仲裁'}">
+                          			|<a href="javascript:;" onclick="x_admin_show('驳回信息填写','admin/stu/disagreeView.jhtml?userId=${userId}&eventId=${userEvent.id}',450,300)" >&nbsp;&nbsp;[申请仲裁]</a>
+                          		</c:when>
+                          		<c:otherwise>
+                          			|${userEvent.status}
+                          		</c:otherwise>
+                          		<%-- <c:when test="${userEvent.status eq '管理员审核中'}">
+                          			|[管理员审核中]
+                          		</c:when>
+                          		<c:when test="${userEvent.status eq '邀约仲裁面谈'}">
+                          			|[邀约仲裁面谈]
+                          		</c:when>
+                          		<c:when test="${userEvent.status eq '证据确凿已定案'}">
+                          			|[证据确凿已定案]
+                          		</c:when> --%>
+                          	</c:choose>
+                        	
+                        </td>
                       </tr>
                      </c:forEach>
                       
@@ -74,7 +94,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
           </div>
     </div>
-
+	<script>
+	 function del(obj,userId,eventId){
+         layer.confirm('确认要删除吗？',function(index){
+             //发异步删除数据
+             var url='admin/stu/delBindEvent.jhtml?userId='+userId+'&eventId='+eventId;
+             $.post(url,function(){
+	            	 $(obj).parents("tr").remove();
+	                 layer.msg('已删除!',{icon:1,time:1000});
+	                 parent.location.reload();
+            	 }
+             );
+             
+         });
+     };
+	</script>
   </body>
 
 </html>

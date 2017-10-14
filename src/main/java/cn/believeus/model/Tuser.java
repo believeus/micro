@@ -3,8 +3,10 @@ package cn.believeus.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,7 +30,7 @@ public class Tuser extends TbaseEntity {
 	/** 紧急联系人 */
 	private String urgentContact;
 
-
+	private List<Ttask> tasklist=new ArrayList<Ttask>();
 	public String getUsername() {
 		return username;
 	}
@@ -92,5 +94,13 @@ public class Tuser extends TbaseEntity {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	public List<Ttask> getTasklist() {
+		return tasklist;
+	}
 
+	public void setTasklist(List<Ttask> tasklist) {
+		this.tasklist = tasklist;
+	}
+	
 }

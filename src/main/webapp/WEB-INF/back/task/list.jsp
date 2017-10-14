@@ -56,23 +56,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table class="layui-table">
         <thead>
           <tr>
-            <th>用户名</th>
-            <th>性别</th>
-            <th>报名时间:</th>
+            <th>任务名</th>
+            <th>发布时间</th>
+            <th>完成时间</th>
+            <th>奖励积分</th>
             <th>状态</th>
-            <th>手机</th>
-            <th>积分值</th>
             <th>操作</th>
            </tr>
         </thead>
         <tbody>
-        <c:forEach var="user" items="${userlist}">
+        <c:forEach var="task" items="${tasklist}">
         	<tr>
-        		<td>${user.username}</td>
-        		<td>${user.sex}</td>
-        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
-        		<td>${user.status}</td>
-        		<td>${user.contact}</td>
+        		<td>${task.username}</td>
+        		<td>${task.beginTime}</td>
+        		<td>${task.endTime}</td>
+        		<td>${task.value}</td>
+        		<td>${task.status}</td>
         		<td>${user.value}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
         		<td class="td-manage">
 	             
