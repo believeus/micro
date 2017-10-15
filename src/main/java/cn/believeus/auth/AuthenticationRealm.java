@@ -16,9 +16,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import cn.believeus.model.Trole;
-import cn.believeus.model.Tadmin;
 import cn.believeus.model.Tauthority;
+import cn.believeus.model.Trole;
+import cn.believeus.model.Tuser;
 import cn.believeus.service.MySQLService;
 import cn.believeus.variables.Variables;
 
@@ -40,7 +40,7 @@ public class AuthenticationRealm extends AuthorizingRealm{
 			log.debug("current uername:"+username);
 			String tokenPassword = new String(authenticationToken.getPassword());
 			// 查询数据库根据用户名获取密码
-			Tadmin admin=(Tadmin)service.findObject(Tadmin.class,Variables.USER_NAME, username);
+			Tuser admin=(Tuser)service.findObject(Tuser.class,Variables.USER_NAME, username);
 			String password=admin.getPassword();
 			if(tokenPassword.equals(password)){
 				// 获取数据库userId
@@ -61,7 +61,7 @@ public class AuthenticationRealm extends AuthorizingRealm{
 		String username=principal.getUsername();
 		log.debug("doGetAuthorizationInfo:"+principal.getUsername());
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Tadmin admin=(Tadmin)service.findObject(Tadmin.class, Variables.USER_NAME, username);
+		Tuser admin=(Tuser)service.findObject(Tuser.class, Variables.USER_NAME, username);
 		// 从数据库获取用户角色
 		Trole role = admin.getRole();
 		if(role!=null){

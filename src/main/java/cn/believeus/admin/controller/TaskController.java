@@ -42,9 +42,9 @@ public class TaskController {
 	
 	@RequestMapping("/admin/task/update")
 	public@ResponseBody String update(Ttask task,HttpSession session){
-		//TODO  管理员登录的情况，用户登录的情况
-		Object attribute = (Tuser)session.getAttribute(Variables.SESSION_USER);
+		Tuser user = (Tuser)session.getAttribute(Variables.SESSION_USER);
 		task.setStatus("求帮助");
+		task.setUser(user);
 		service.saveOrUpdate(task);
 		return "true";
 	}
@@ -54,5 +54,8 @@ public class TaskController {
 		return "true";
 	}
 	
-	
+	/*public @ResponseBody String iCanDoIt(int taskId,int curUserId){
+		Ttask task = (Ttask)service.findObject(Ttask.class, taskId);
+		Tuser user = (Tuser)service.findObject(Tuser.class, curUserId);
+	}*/
 }

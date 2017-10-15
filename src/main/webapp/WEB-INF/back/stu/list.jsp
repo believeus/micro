@@ -66,27 +66,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </thead>
         <tbody>
         <c:forEach var="user" items="${userlist}">
-        	<tr>
-        		<td>${user.username}</td>
-        		<td>${user.sex}</td>
-        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
-        		<td>${user.status}</td>
-        		<td>${user.contact}</td>
-        		<td>${user.value}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
-        		<td class="td-manage">
-	             
-	              <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',600,500)" href="javascript:;">
-	                <i class="layui-icon">&#xe642;</i>
-	              </a>
-	              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
-	                <i class="layui-icon">&#xe631;</i>
-	              </a>
-	              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-	                <i class="layui-icon">&#xe640;</i>
-	              </a>
-	              <a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/eventView.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[绑定事件]</a>
-            	</td>
-        	</tr>
+        	<c:if test="${user.username ne 'admin' }">
+        		<tr>
+	        		<td>${user.username}</td>
+	        		<td>${user.sex}</td>
+	        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
+	        		<td>${user.status}</td>
+	        		<td>${user.contact}</td>
+	        		<td>${user.value}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
+	        		<td class="td-manage">
+		             
+		              <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',600,500)" href="javascript:;">
+		                <i class="layui-icon">&#xe642;</i>
+		              </a>
+		              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
+		                <i class="layui-icon">&#xe631;</i>
+		              </a>
+		              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+		                <i class="layui-icon">&#xe640;</i>
+		              </a>
+		              <a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/eventView.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[绑定事件]</a>
+	            	</td>
+        		</tr>
+        	</c:if>
+        	
         </c:forEach>
           
          

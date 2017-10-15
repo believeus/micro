@@ -72,7 +72,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<td>${task.begintime}</td>
         		<td>${task.endtime}</td>
         		<td>${task.value}</td>
-        		<td><a  href="javascript:;" onclick="ican(${task.id},${serssionScope.sessionUser.id},${task.user.id})">${task.status}</a></td>
+        		<td>
+        		   <c:choose>
+        		   	 <c:when test="${sessionScope.sessionUser.id !=task.user.id}">
+        		   	 	<a href="javascript:;" onclick="icandoIt(${task.id},${serssionScope.sessionUser.id},${task.user.id})">${task.status}</a>
+        		   	 </c:when>
+        		   	 <c:otherwise>
+        		   	 	<a href="javascript:;">${task.status}</a>
+        		   	 </c:otherwise>
+        		   </c:choose>
+        			
+        		</td>
         		<td class="td-manage">
 	             
 	              <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',600,500)" href="javascript:;">
@@ -132,7 +142,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              
           });
       }
-     var ican=function(taskId,curUserId,publishUserId){
+      
+     var icandoIt=function(taskId,curUserId,publishUserId){
     	 layer.confirm('确认要接单吗？',function(index){
     		 var url="";
              //发异步删除数据

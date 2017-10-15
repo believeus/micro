@@ -18,7 +18,7 @@ public class Trole extends TbaseEntity{
 	
 	private String roleName;
 	private String description;
-	private Tadmin admin;
+	private Tuser user;
 	private List<Tauthority> authoritys=new ArrayList<Tauthority>();
 	
 	@OneToMany(mappedBy="role",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
@@ -37,11 +37,11 @@ public class Trole extends TbaseEntity{
 	}
 	
 	@OneToOne
-	public Tadmin getAdmin() {
-		return admin;
+	public Tuser getAdmin() {
+		return user;
 	}
-	public void setAdmin(Tadmin admin) {
-		this.admin = admin;
+	public void setAdmin(Tuser user) {
+		this.user = user;
 	}
 	
 	public String getDescription() {

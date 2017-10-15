@@ -4,11 +4,13 @@ import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import cn.believeus.model.Tadmin;
+
+import cn.believeus.model.Tuser;
 import cn.believeus.service.MySQLService;
 import cn.believeus.variables.Variables;
 
@@ -42,7 +44,7 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 		Session session = subject.getSession();
 		TokenAuthentication authenticationToken = (TokenAuthentication) token;
 		String username = authenticationToken.getUsername();
-		Tadmin sessionUser = (Tadmin)service.findObject(Tadmin.class, Variables.USER_NAME, username);
+		Tuser sessionUser = (Tuser)service.findObject(Tuser.class, Variables.USER_NAME, username);
 		session.setAttribute(Variables.SESSION_USER,sessionUser);
 		return super.onLoginSuccess(token, subject, servletRequest, servletResponse);
 	}

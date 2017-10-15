@@ -24,7 +24,6 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		
 		
-		<mapping class="cn.believeus.model.Tadmin"/>
 		<mapping class="cn.believeus.model.Trole"/>
 		<mapping class="cn.believeus.model.Tauthority"/>
 		<mapping class="cn.believeus.model.Tevent"/>

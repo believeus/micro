@@ -38,6 +38,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
           </div>
           <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录密码:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>性别:
               </label>
@@ -104,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
-            $.post("admin/stu/saveOrUpdata.jhtml",data.field,function(data){
+            $.post("admin/stu/update.jhtml",data.field,function(data){
             	layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);

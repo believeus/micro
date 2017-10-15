@@ -24,7 +24,6 @@
 		    <property name="filterChainDefinitions">
 			<value>
 				/admin/**=authc
-		
 			</value>
 		</property>
 	</bean>

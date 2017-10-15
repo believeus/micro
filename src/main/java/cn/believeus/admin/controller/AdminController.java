@@ -3,11 +3,13 @@ package cn.believeus.admin.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.believeus.model.Tadmin;
+import cn.believeus.model.Tuser;
 import cn.believeus.service.MySQLService;
 import cn.believeus.variables.Variables;
 
@@ -25,23 +27,26 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/admin/login")
-	public String login(Tadmin tadmin) {
+	public String login(Tuser user) {
 		return "/WEB-INF/back/index.jsp";
 		
 	}
-	
-	
-	
 	// 更新管理员的密码
 	@RequestMapping(value="/admin/updatePwd")
 	public 	@ResponseBody String updatePwd(String newpass,HttpSession session){
-		Tadmin admin=(Tadmin)session.getAttribute(Variables.SESSION_USER);
-		admin = (Tadmin) service.findObject(Tadmin.class, "id",admin.getId());
-		admin.setPassword(newpass);
-		service.saveOrUpdate(admin);
+		Tuser user=(Tuser)session.getAttribute(Variables.SESSION_USER);
+		user = (Tuser) service.findObject(Tuser.class, "id",user.getId());
+		user.setPassword(newpass);
+		service.saveOrUpdate(user);
 		return newpass;
 	}
 	
+	@RequestMapping("admin/logout")
+	public String logout(){
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return "redirect:/admin/loginView.jhtml";
+	}
 	
 	
 }

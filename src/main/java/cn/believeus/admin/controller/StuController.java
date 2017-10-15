@@ -43,7 +43,7 @@ public class StuController {
 		return "/WEB-INF/back/stu/add.jsp";
 	}
 	
-	@RequestMapping("/admin/stu/saveOrUpdata")
+	@RequestMapping("/admin/stu/update")
 	public @ResponseBody String update(Tuser user){
 		service.saveOrUpdate(user);
 		return "true";

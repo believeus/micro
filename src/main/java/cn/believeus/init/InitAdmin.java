@@ -1,13 +1,15 @@
 package cn.believeus.init;
 
 import javax.annotation.Resource;
+
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import cn.believeus.model.Tadmin;
+
 import cn.believeus.model.Tauthority;
 import cn.believeus.model.Trole;
+import cn.believeus.model.Tuser;
 import cn.believeus.service.MySQLService;
 import cn.believeus.variables.Variables;
 
@@ -22,17 +24,17 @@ public class InitAdmin implements ApplicationListener<ApplicationEvent>{
 	public void onApplicationEvent(ApplicationEvent event) {
 		// tomcat启动完毕调用该方法
 		if(event instanceof ContextRefreshedEvent){
-			Tadmin admin = (Tadmin)service.findObject(Tadmin.class, Variables.USER_NAME, "admin");
-			if(admin == null){
-				 admin = new Tadmin();
-				 admin.setUsername("admin");
-				 admin.setPassword("admin");
-				 admin.setDescription("该管理员拥有所有权限");
-				 service.saveOrUpdate(admin);
+			Tuser user = (Tuser)service.findObject(Tuser.class, Variables.USER_NAME, "admin");
+			if(user == null){
+				 user = new Tuser();
+				 user.setUsername("admin");
+				 user.setPassword("admin");
+				 user.setDescription("该管理员拥有所有权限");
+				 service.saveOrUpdate(user);
 				 Trole role=new Trole();
 				 role.setDescription("该角色拥有所有权限");
 				 role.setRoleName("root");
-				 role.setAdmin(admin);
+				 role.setAdmin(user);
 				 service.saveOrUpdate(role);
 				 Tauthority authority=new Tauthority();
 				 authority.setPermission("*");
