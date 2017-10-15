@@ -29,50 +29,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-        <input type="hidden" name="userEventId" >
+        <input type="hidden" name="id" value="${task.id}" >
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>任务名
               </label>
               <div class="layui-input-inline">
-                  <input type="text"   name="title" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" value="${task.title}" readonly="readonly" name="title" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div class="layui-form-item">
+          <div id=form-value class="layui-form-item" style="display: none;">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>积分值
               </label>
               <div class="layui-input-inline">
-                  <input type="text"   name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
+                  <input type="text" value="${task.value}"  name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div id="form-value" class="layui-form-item" >
+          <div id="form-value" class="layui-form-item" style="display: none;">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>开始日期
               </label>
               <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="开始日" name="begintime" id="begintime">
+                  <input class="layui-input" readonly="readonly" value="${task.begintime}" placeholder="开始日" name="begintime" id="begintime">
               </div>
           </div>
-          <div id="form-value" class="layui-form-item" >
+          <div id="form-value" class="layui-form-item"  style="display: none;">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>结束日期
               </label>
               <div class="layui-input-inline">
-                  <input  name="endtime" id="endtime" placeholder="结束日期" lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input  value="${task.endtime}" name="endtime" id="endtime" placeholder="结束日期" lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div class="layui-form-item">
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>状态:
+              </label>
+              <div class="layui-input-inline">
+                  <select lay-filter="select"  name="status" class="valid">
+                    <option value="任务完成">任务完成</option>
+                    <option value="酌情给分">酌情给分</option>
+                  </select>
+              </div>
+          </div>
+          <div class="layui-form-item" style="display: none;" >
               <label for="L_repass" class="layui-form-label">
                  	详细描述
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容"  name="message" class="layui-textarea">${userEvent.message}</textarea>
+                  <textarea placeholder="请输入内容" value="${task.message}"  name="message" class="layui-textarea">${userEvent.message}</textarea>
               </div>
           </div>
+         
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">添加</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">更新</button>
           </div>
       </form>
     </div>
@@ -86,7 +98,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           form.on('submit(add)', function(data){
             console.log(data.field);
             //发异步，把数据提交给php
-            $.post("admin/task/buildtask.jhtml",data.field,function(){
+            $.post("admin/task/upstatus.jhtml",data.field,function(){
+            	
             	layer.alert("编辑成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
@@ -100,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           });
           
           form.on('select(select)', function(data){
-        	  if(data.value=="酌情增减积分"){
+        	  if(data.value=="酌情给分"){
         		  $("#form-value").show();
         	  }else{
         		  $("#form-value").hide();
@@ -110,8 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	  return false;
         	});
           
-        });
-        
+         
         layui.use('laydate', function(){
             var laydate = layui.laydate;
             
@@ -129,6 +141,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               ,type:'datetime'
             });
           });
+        
+     });
     </script>
   </body>
 

@@ -11,7 +11,11 @@ public class Ttask extends TbaseEntity {
 	private String begintime;
 	private String endtime;
 	private String value;
+	//发布任务的人
 	private Tuser user;
+	//接受任务的人
+	private Tuser aidUser;
+	
 	private String message;
 
 	public String getTitle() {
@@ -55,6 +59,16 @@ public class Ttask extends TbaseEntity {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "fk_aidUserId", referencedColumnName = "id")
+	public Tuser getAidUser() {
+		return aidUser;
+	}
+
+	public void setAidUser(Tuser aidUser) {
+		this.aidUser = aidUser;
+	}
+
+	@ManyToOne
 	@JoinColumn(name = "fk_userId", referencedColumnName = "id")
 	public Tuser getUser() {
 		return user;
@@ -63,5 +77,5 @@ public class Ttask extends TbaseEntity {
 	public void setUser(Tuser user) {
 		this.user = user;
 	}
-
+	
 }

@@ -40,14 +40,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
-      </div>
       <xblock>
         <button class="layui-btn" onclick="x_admin_show('添加任务','admin/task/addview.jhtml',350,500)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
@@ -61,6 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <th>完成时间</th>
             <th>奖励积分</th>
             <th>状态</th>
+            <th>任务认领人</th>
             <th>操作</th>
            </tr>
         </thead>
@@ -73,27 +66,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<td>${task.endtime}</td>
         		<td>${task.value}</td>
         		<td>
-        		   <c:choose>
-        		   	 <c:when test="${sessionScope.sessionUser.id !=task.user.id}">
-        		   	 	<a href="javascript:;" onclick="icandoIt(${task.id},${serssionScope.sessionUser.id},${task.user.id})">${task.status}</a>
-        		   	 </c:when>
-        		   	 <c:otherwise>
-        		   	 	<a href="javascript:;">${task.status}</a>
-        		   	 </c:otherwise>
-        		   </c:choose>
-        			
+        		 <c:choose>
+        		 	<c:when test="${task.aidUser ==null&&task.status ==null}">
+        		 		 <a href="javascript:;">求帮助</a>
+        		 	</c:when>
+        		 	<c:when test="${task.aidUser !=null&&task.status !=null}">
+        		 		${task.status}
+        		 	</c:when>
+        		 	<c:otherwise>
+        		 		<a href="javascript:;">任务被认领</a>
+        		 	</c:otherwise>
+        		 </c:choose>
+        		 
+        		</td>
+        		<td>
+        			<c:choose>
+        				<c:when test="${sessionScope.sessionUser.id != task.user.id &&task.aidUser ==null }">
+        					<a href="javascript:;" onclick="icandoIt(${task.id},${sessionScope.sessionUser.id })">[申请认领该任务]</a>
+        				</c:when>
+        				<c:when test="${task.aidUser !=null }">
+        					<span style="color: red;font-size: 18px;">[${task.aidUser.username}]</span>
+        				</c:when>
+        				<c:otherwise>
+        					<a href="javascript:;">[不能认领自己发布的任务]</a>
+        				</c:otherwise>
+        			</c:choose>
         		</td>
         		<td class="td-manage">
+        		
+        		<c:choose>
+        			<c:when test="${task.status eq '求帮助'}">
+        				 <a title="编辑"  onclick="x_admin_show('编辑','admin/task/editview.jhtml?taskId=${task.id}',600,500)" href="javascript:;">
+	                  		[编辑]
+	                     </a>
+	                 	<a title="删除" onclick="del(this,${task.id})" href="javascript:;">
+	                   		[删除]
+	                 	</a>
+        			</c:when>
+        			<c:otherwise>
+        				<c:choose>
+        					<c:when test="${sessionScope.sessionUser.id == task.user.id && task.status ==null}">
+        						<a title="编辑"  onclick="x_admin_show('编辑','admin/task/taskstatus.jhtml?taskId=${task.id}',600,500)" href="javascript:;">
+	                  				[任务状态]
+	                   			</a>
+        					</c:when>
+        					<c:when test="${sessionScope.sessionUser.id == task.user.id && task.status !=null}">
+        						<a title="编辑"   href="javascript:;">
+	                  				[任务已结束]
+	                   			</a>
+        					</c:when>
+        					<c:otherwise>
+        						<a title="编辑"  href="javascript:;">
+	                  				[无权查看]
+	                   			 </a>
+        					</c:otherwise>
+        				</c:choose>
+        				
+        			</c:otherwise>
+        		</c:choose>
+	            
 	             
-	              <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',600,500)" href="javascript:;">
-	                <i class="layui-icon">&#xe642;</i>
-	              </a>
-	              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
-	                <i class="layui-icon">&#xe631;</i>
-	              </a>
-	              <a title="删除" onclick="del(this,${task.id})" href="javascript:;">
-	                <i class="layui-icon">&#xe640;</i>
-	              </a>
+	             
             	</td>
         	</tr>
         </c:forEach>
@@ -126,8 +159,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //执行一个laydate实例
         laydate.render({
-          elem: '#end' //指定元素
+          elem: '#end'//指定元素
         });
+        
+        
       });
      
 
@@ -143,19 +178,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           });
       }
       
-     var icandoIt=function(taskId,curUserId,publishUserId){
+     var icandoIt=function(taskId,aidUserId){
     	 layer.confirm('确认要接单吗？',function(index){
-    		 var url="";
+    		 var url="admin/task/iCanDoIt.jhtml?taskId="+taskId+"&aidUserId="+aidUserId;
              //发异步删除数据
-             $.post(url,function(){
-           	  $(obj).parents("tr").remove();
-                 layer.msg('已删除!',{icon:1,time:1000});
+             $.post(url,function(data){
+            	 layer.alert("接单成功", {icon: 6},function () {
+            		 window.location.reload();
+                 });
              });
             
          });
      };
 
-    //?taskId=${task.id}&curuserId=${serssionScope.sessionUser.id}&publishUserId
     </script>
   </body>
 

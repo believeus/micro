@@ -110,4 +110,21 @@ public class StuController {
 		service.saveOrUpdate(userEvent);
 		return "true";
 	}
+	
+	@RequestMapping("/admin/stu/uppasswd")
+	public @ResponseBody String uppasswd(Integer userId,String password){
+		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
+		user.setPassword(password);
+		service.saveOrUpdate(user);
+		return "true";
+	}
+	
+	@RequestMapping("/admin/stu/uppasswdView")
+	public ModelAndView uppasswdView(Integer userId){
+		ModelAndView modelview=new ModelAndView();
+		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
+		modelview.setViewName("/WEB-INF/back/stu/uppassswd.jsp");
+		modelview.addObject("user", user);
+		return modelview;
+	}
 }
