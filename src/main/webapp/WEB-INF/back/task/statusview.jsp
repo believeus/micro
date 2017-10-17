@@ -68,8 +68,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </label>
               <div class="layui-input-inline">
                   <select lay-filter="select"  name="status" class="valid">
-                    <option value="任务完成">任务完成</option>
-                    <option value="酌情给分">酌情给分</option>
+                    <option value="任务完成">任务已经完成</option>
+                    <option value="酌情给分">任务酌情给分</option>
                   </select>
               </div>
           </div>

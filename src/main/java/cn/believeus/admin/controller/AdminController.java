@@ -48,5 +48,9 @@ public class AdminController {
 		return "redirect:/admin/loginView.jhtml";
 	}
 	
+	@RequestMapping("admin/welcome")
+	public String welcome(){
+		return "/WEB-INF/back/welcome.jsp";
+	}
 	
 }

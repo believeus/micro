@@ -36,17 +36,33 @@ public class ReviewController {
 		return modelView;
 	}
 
+	
+	
 	@RequestMapping("/admin/review/update")
 	@ResponseBody
-	 public String update(Integer userEventId, String status, String value) {
+	 public String update(Integer userEventId, String status, int liveValue,int learnValue) {
 		TuserEvent userEvent = (TuserEvent) service.findObject(TuserEvent.class, userEventId);
 		userEvent.setStatus(status);
-		userEvent.setValue(value);
+		switch (liveValue) {
+		case 0:
+			userEvent.setLearnValue(learnValue);
+			break;
+		default:
+			userEvent.setLiveValue(liveValue);
+			break;
+		}
 		service.saveOrUpdate(userEvent);
 		if (status.equals("酌情增减积分") || status.equals("证据确凿定案")) {
 			int userId = userEvent.getUserId();
 			Tuser user = (Tuser) service.findObject(Tuser.class, userId);
-			user.setValue(user.getValue() + Integer.parseInt(value));
+			switch (liveValue) {
+			case 0:
+				user.setLearnValue(user.getLearnValue()+learnValue);
+				break;
+			default:
+				user.setLiveValue(user.getLiveValue()+liveValue);
+				break;
+			}
 			service.saveOrUpdate(user);
 		}
 		return "true";

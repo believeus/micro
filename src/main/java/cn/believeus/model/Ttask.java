@@ -10,7 +10,8 @@ public class Ttask extends TbaseEntity {
 	private String title;
 	private String begintime;
 	private String endtime;
-	private String value;
+	private int learnValue;
+	private int liveValue;
 	//发布任务的人
 	private Tuser user;
 	//接受任务的人
@@ -41,13 +42,21 @@ public class Ttask extends TbaseEntity {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
-
-	public String getValue() {
-		return value;
+	
+	public int getLearnValue() {
+		return learnValue;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setLearnValue(int learnValue) {
+		this.learnValue = learnValue;
+	}
+
+	public int getLiveValue() {
+		return liveValue;
+	}
+
+	public void setLiveValue(int liveValue) {
+		this.liveValue = liveValue;
 	}
 
 	public String getMessage() {

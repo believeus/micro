@@ -5,6 +5,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="date" uri="/WEB-INF/lib/datetag.tld"%>  
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
   
@@ -49,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      	<tr>
                         <td>${userEvent.title}</td>
                         <td>${userEvent.type }</td>
-                        <td>${userEvent.value}</td>
+                        <td>${userEvent.learnValue==0?userEvent.liveValue:userEvent.learnValue}</td>
                         <td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
                         <td>${userEvent.observer}</td>
                         <td> 
@@ -62,7 +63,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           			<a href="javascript:;" >[${userEvent.status}]</a>
                           		</c:otherwise>
                           	</c:choose>
-                        	
+                        	 <c:if test="${sessionScope.sessionUser.username eq 'admin' }">
+                          		<a href="javascript:;"  onclick="del(this,${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
+                          	</c:if>
                         </td>
                       </tr>
                      </c:forEach>
@@ -85,7 +88,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
           </div>
     </div>
-	
+	 <script>
+	 function del(obj,userEventId){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            var url='admin/stu/delBindEvent.jhtml?userEventId='+userEventId;
+            $.post(url,function(){
+	            	 $(obj).parents("tr").remove();
+	                 layer.msg('已删除!',{icon:1,time:1000});
+	                 window.location.reload();
+           	 }
+            );
+            
+        });
+    };
+	</script>
   </body>
 
 </html>

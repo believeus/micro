@@ -59,22 +59,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <tbody>
 		        <c:forEach var="userEvent" items="${userEventList}">
 		        	<tr>
-		        		<td>${userEvent.username}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
+		        		<td>${userEvent.truename}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
 		        		<td>${userEvent.title}</td>
 		        		<td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
-		        		<td>${userEvent.value}</td>
+		        		<td>${userEvent.learnValue==0?userEvent.liveValue:userEvent.learnValue}</td>
 		        		<td>${userEvent.status}</td>
 		        		<td class="td-manage">
-		        		  
 		        		  <c:choose>
-		        		  	<c:when test="${userEvent.status != '证据确凿定案' }">
-		        		    	<a href="javascript:;"  onclick="del(this,${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
-		        		    	<a href="javascript:;"  onclick="x_admin_show('编辑','admin/review/editview.jhtml?userEventId=${userEvent.id}',500,450)" >[详情]</a>
-		        		  	</c:when>
+		        		    <c:when test="${sessionScope.sessionUser.username !='admin' }">
+		        		    	<a href="javascript:;" >无权操作</a>
+		        		    </c:when>
+        		  			<c:when test="${userEvent.status != '证据确凿定案' }">
+        		    			<a href="javascript:;"  onclick="del(this,${userEvent.id})" >&nbsp;&nbsp;[删除]</a>
+        		    			<a href="javascript:;"  onclick="x_admin_show('编辑','admin/review/editview.jhtml?userEventId=${userEvent.id}',500,450)" >[详情]</a>
+        		  			</c:when>
 		        		  	<c:otherwise>
 		        		  		<a href="javascript:;" >已定案不得操作</a>
 		        		    </c:otherwise>
-		        		   
 		        		  </c:choose>
 		        		  
 			             

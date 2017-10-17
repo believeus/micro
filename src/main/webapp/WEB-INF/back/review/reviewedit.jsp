@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
   
@@ -61,7 +62,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>分数
               </label>
               <div class="layui-input-inline">
-                  <input value="${userEvent.value}"  name="value"  lay-verify="required"  autocomplete="off" class="layui-input">
+              <input value="${userEvent.liveValue}"  name="liveValue"  lay-verify="required"  autocomplete="off" class="layui-input">
+              <input value="${userEvent.learnValue}"  name="learnValue"  lay-verify="required"  autocomplete="off" class="layui-input">
+                 
               </div>
           </div>
           <div class="layui-form-item">

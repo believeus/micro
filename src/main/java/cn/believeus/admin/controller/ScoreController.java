@@ -20,9 +20,9 @@ public class ScoreController {
 	@RequestMapping("/admin/score/list")
 	public ModelAndView listView(){
 		ModelAndView modelView=new ModelAndView();
-		List<?> scoreList = service.findObjectList(Tevent.class, 15);
+		List<?> eventList = service.findObjectList(Tevent.class, 15);
 		modelView.setViewName("/WEB-INF/back/score/list.jsp");
-		modelView.addObject("scoreList", scoreList);
+		modelView.addObject("eventList", eventList);
 		return modelView;
 	}
 	
@@ -34,13 +34,13 @@ public class ScoreController {
 	@RequestMapping("/admin/score/editView")
 	public ModelAndView editView(int id){
 		ModelAndView modelView=new ModelAndView();
-		Tevent score = (Tevent)service.findObject(Tevent.class, id);
+		Tevent event = (Tevent)service.findObject(Tevent.class, id);
 		modelView.setViewName("/WEB-INF/back/score/edit.jsp");
-		modelView.addObject("score",score);
+		modelView.addObject("event",event);
 		return modelView;
 	}
-	@RequestMapping("/admin/score/saveOrUpdate")
-	public @ResponseBody String saveOrUpdate(Tevent score){
+	@RequestMapping("/admin/score/update")
+	public @ResponseBody String update(Tevent score){
 		service.saveOrUpdate(score);
 		return "true";
 	}

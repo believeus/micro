@@ -29,12 +29,15 @@ public class InitAdmin implements ApplicationListener<ApplicationEvent>{
 				 user = new Tuser();
 				 user.setUsername("admin");
 				 user.setPassword("admin");
+				 user.setSex("保密");
+				 user.setStatus("还活着");
 				 user.setDescription("该管理员拥有所有权限");
-				 user.setValue(500);
+				 user.setLearnValue(500);
+				 user.setLiveValue(500);
 				 service.saveOrUpdate(user);
 				 Trole role=new Trole();
 				 role.setDescription("该角色拥有所有权限");
-				 role.setRoleName("root");
+				 role.setRoleName("admin");
 				 role.setAdmin(user);
 				 service.saveOrUpdate(role);
 				 Tauthority authority=new Tauthority();

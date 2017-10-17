@@ -19,43 +19,50 @@ public class Tuser extends TbaseEntity {
 
 	private static final long serialVersionUID = -7459216849514123828L;
 	/** 联系方式 */
-	private String contact;
+	private String phone;
 	private String description;
 	/** 注册密码 */
 	private String password;
-	/** 籍贯 */
-	private String provice;
 	private Trole role;
 	private String sex;
-	private List<Ttask> tasklist = new ArrayList<Ttask>();
+	
 	/** 紧急联系人 */
-	private String urgentContact;
+	private String urgent;
 
-	/** 紧急联系电话 */
-	private String urgentPhone;
 	/** 注册用户名 */
 	private String username;
+	private String truename;
 
-	/** 用户的当前积分 */
-	private Integer value;
-
-	public String getContact() {
-		return contact;
-	}
-
+	/** 学习积分 */
+	private Integer  learnValue;
+    
+	/**生活积分*/
+	private Integer  liveValue;
+	
+	private List<Ttask> tasklist = new ArrayList<Ttask>();
+	
 	public String getDescription() {
 		return description;
+	}
+
+	public Integer getLearnValue() {
+		return learnValue;
+	}
+
+	public Integer getLiveValue() {
+		return liveValue;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public String getProvice() {
-		return provice;
+
+	public String getPhone() {
+		return phone;
 	}
 
-	@OneToOne(mappedBy = "admin", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	public Trole getRole() {
 		return role;
 	}
@@ -69,20 +76,17 @@ public class Tuser extends TbaseEntity {
 		return tasklist;
 	}
 
-	public String getUrgentContact() {
-		return urgentContact;
+	public String getTruename() {
+		return truename;
 	}
 
-	public String getUrgentPhone() {
-		return urgentPhone;
+
+	public String getUrgent() {
+		return urgent;
 	}
 
 	public String getUsername() {
 		return username;
-	}
-
-	public Integer getValue() {
-		return value;
 	}
 
 	@Override
@@ -90,21 +94,27 @@ public class Tuser extends TbaseEntity {
 		return super.onUpdate(s);
 	}
 
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public void setLearnValue(Integer learnValue) {
+		this.learnValue = learnValue;
+	}
+
+	public void setLiveValue(Integer liveValue) {
+		this.liveValue = liveValue;
+	}
+
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public void setProvice(String provice) {
-		this.provice = provice;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
 
 	public void setRole(Trole role) {
 		this.role = role;
@@ -118,20 +128,20 @@ public class Tuser extends TbaseEntity {
 		this.tasklist = tasklist;
 	}
 
-	public void setUrgentContact(String urgentContact) {
-		this.urgentContact = urgentContact;
+
+	public void setTruename(String truename) {
+		this.truename = truename;
 	}
 
-	public void setUrgentPhone(String urgentPhone) {
-		this.urgentPhone = urgentPhone;
+	public void setUrgent(String urgent) {
+		this.urgent = urgent;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
-	}
-
+	
+	
+	
 }

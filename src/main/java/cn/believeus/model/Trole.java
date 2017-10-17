@@ -36,7 +36,7 @@ public class Trole extends TbaseEntity{
 		this.roleName = roleName;
 	}
 	
-	@OneToOne
+	@OneToOne(mappedBy = "role")
 	public Tuser getAdmin() {
 		return user;
 	}

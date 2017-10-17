@@ -41,57 +41,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="x-body">
       <xblock>
-      	  <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
-        	<button class="layui-btn" onclick="x_admin_show('添加程序员','admin/stu/addView.jhtml',400,550)"><i class="layui-icon"></i>添加</button>
-         </c:if>
+        <button class="layui-btn" onclick="x_admin_show('添加任务','admin/task/addview.jhtml',350,500)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
-      <table class="layui-table">
-        <thead>
-          <tr>
-            <th>用户名</th>
-            <th>性别</th>
-            <th>用户角色</th>
-            <th>报名时间:</th>
-            <th>状态</th>
-            <th>生活状态积分值</th>
-            <th>学习状态积分值</th>
-            <th>操作</th>
-           </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="user" items="${userlist}">
-        		<tr>
-	        		<td><span>${user.truename}</span></td>
-	        		<td><span>${user.sex}</span></td>
-	        		<td>
-	        			<c:choose>
-	        				<c:when test="${user.role.roleName eq 'stud'}">
-	        					<span>学员小菜鸟</span>
-	        				</c:when>
-	        				<c:otherwise>
-	        					<span>核心程序猿</span>
-	        				</c:otherwise>
-	        			</c:choose>
-	        		</td>
-	        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
-	        		<td><span>${user.status}</span></td>
-	        		<td><span>${user.liveValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
-	        		<td><span>${user.learnValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
-	        		<td class="td-manage">
-	        			 <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',400,580)" href="javascript:;">[编辑]</a>
-		        		 <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
-				               <a href="javascript:;" onclick="x_admin_show('绑定事件','admin/stu/eventView.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[绑定事件]</a>
-			               	   <a href="javascript:;" onclick="del(this,${user.id})">[删除]</a>
-			             </c:if>
-		      
-	            	</td>
-        		</tr>
-        	
-        </c:forEach>
-          
-         
-        </tbody>
-      </table>
+      <div style="border: 1px grey; width: 200px;height: 200px;"></div>
       <div class="page">
         <div>
           <a class="prev" href="">&lt;&lt;</a>
@@ -117,37 +70,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //执行一个laydate实例
         laydate.render({
-          elem: '#end' //指定元素
+          elem: '#end'//指定元素
         });
+        
+        
       });
+     
 
-      
       /*用户-删除*/
       function del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              var url="admin/stu/del.jhtml?id="+id;
-              $.post(url,function(){
+              $.post("admin/task/del.jhtml?taskId="+id,function(){
             	  $(obj).parents("tr").remove();
                   layer.msg('已删除!',{icon:1,time:1000});
-                  window.location.reload();
               });
-              
+             
           });
       }
+      
+     var icandoIt=function(taskId,aidUserId){
+    	 layer.confirm('确认要接单吗？',function(index){
+    		 var url="admin/task/iCanDoIt.jhtml?taskId="+taskId+"&aidUserId="+aidUserId;
+             //发异步删除数据
+             $.post(url,function(data){
+            	 layer.alert("接单成功", {icon: 6},function () {
+            		 window.location.reload();
+                 });
+             });
+            
+         });
+     };
 
-
-
-      function delAll(argument) {
-
-        var data = tableCheck.getData();
-  
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
     </script>
   </body>
 

@@ -14,11 +14,12 @@ public class TuserEvent extends TbaseEntity {
 	private int eventId;
 	// 观察员
 	private String observer;
-	private String username;
+	private String truename;
 	private String title;
 
 	private String type;
-	private String value;
+	private int liveValue;
+	private int learnValue;
 	private String message;
 
 	public int getUserId() {
@@ -61,12 +62,20 @@ public class TuserEvent extends TbaseEntity {
 		this.type = type;
 	}
 
-	public String getValue() {
-		return value;
+	public int getLiveValue() {
+		return liveValue;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setLiveValue(int liveValue) {
+		this.liveValue = liveValue;
+	}
+
+	public int getLearnValue() {
+		return learnValue;
+	}
+
+	public void setLearnValue(int learnValue) {
+		this.learnValue = learnValue;
 	}
 
 	public String getMessage() {
@@ -77,12 +86,14 @@ public class TuserEvent extends TbaseEntity {
 		this.message = message;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getTruename() {
+		return truename;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setTruename(String truename) {
+		this.truename = truename;
 	}
+
+	
 
 }

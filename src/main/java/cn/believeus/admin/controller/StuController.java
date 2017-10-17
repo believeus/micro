@@ -49,6 +49,12 @@ public class StuController {
 		return "true";
 	}
 	
+	@RequestMapping("/admin/stu/del")
+	public @ResponseBody String del(int id){
+		service.delete(Tuser.class, id);
+		return "true";
+	}
+	
 	@RequestMapping("/admin/stu/myDo")
 	public ModelAndView myDo(int userId){
 		ModelAndView modelView=new ModelAndView();
@@ -64,7 +70,7 @@ public class StuController {
 		ModelAndView modelView=new ModelAndView();
 		List<?> eventList = service.findObjectList(Tevent.class, 8);
 		modelView.setViewName("/WEB-INF/back/stu/bindevent.jsp");
-		modelView.addObject("vList",eventList);
+		modelView.addObject("eventList",eventList);
 		modelView.addObject("userId", userId);
 		return modelView;
 	}
@@ -78,11 +84,20 @@ public class StuController {
 		userEvent.setTitle(event.getTitle());
 		userEvent.setType(event.getType());
 		userEvent.setObserver(username);
-		userEvent.setValue(event.getValue());
+		int learnValue=event.getLearnValue();
+		int liveValue=event.getLiveValue();
+		switch (learnValue) {
+			case 0:
+				userEvent.setLiveValue(liveValue);
+				break;
+			default:
+				userEvent.setLearnValue(learnValue);
+				break;
+		}
 		//审核状态
 		userEvent.setStatus("事件发生");
 		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
-		userEvent.setUsername(user.getUsername());
+		userEvent.setTruename(user.getTruename());
 		service.saveOrUpdate(userEvent);
 		return "true";
 	}

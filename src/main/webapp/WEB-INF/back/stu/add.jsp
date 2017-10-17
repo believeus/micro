@@ -31,10 +31,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form class="layui-form">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>姓名:
+                  <span class="x-red">*</span>用户姓名:
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="username" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" id="L_email" name="truename" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录邮箱:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" name="username"  lay-verify="required|email"  autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
@@ -45,9 +53,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <input id="L_pass" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>用户角色:
+              </label>
+              <div class="layui-input-inline">
+                  <select  name="role.roleName" class="valid">
+                     <option value="stud">学生</option>
+                    <option value="teach">老师</option>
+                  </select>
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>性别:
+                  <span class="x-red">*</span>用户性别:
               </label>
               <div class="layui-input-inline">
                   <select  name="sex" class="valid">
@@ -56,51 +75,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </select>
               </div>
           </div>
-          <div class="layui-form-item">
+           <div class="layui-form-item" style="display: none;">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>联系方式:
-              </label>
-              <div class="layui-input-inline">
-                  <input id="L_pass" name="contact"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-           <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>状态:
+                  <span class="x-red">*</span>用户状态:
               </label>
                <div class="layui-input-inline">
                   <select  name="status" class="valid">
                     <option value="考核期">考核期</option>
-                    <option value="缓冲期">缓冲期</option>
-                    <option value="学习期">学习期</option>
-                    <option value="请假">请假</option>
-                    <option value="缓冲期退费">缓冲期退费</option>
-                    <option value="毕业">毕业</option>
                   </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>紧急联系人:
+                  <span class="x-red">*</span>联系电话:
               </label>
               <div class="layui-input-inline">
-                  <input id="L_pass" name="urgentContact"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input id="L_pass" name="phone"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
               </div>
           </div>
+          
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>紧急联系电话:
+                  <span class="x-red">*</span>紧急电话:
               </label>
               <div class="layui-input-inline">
-                  <input id="L_pass" name="urgentPhone"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
+                  <input id="L_pass" name="urgent"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
-          <input name="value" value="500" hidden="hidden" >
-           
+          <input name="liveValue" value="50" hidden="hidden" >
+          <input name="learnValue" value="50" hidden="hidden" >
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>
           </div>
+          
       </form>
     </div>
     <script>
@@ -124,6 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
             return false;
           });
+          
           
           
         });

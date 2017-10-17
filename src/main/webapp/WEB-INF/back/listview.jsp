@@ -68,13 +68,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<td>
 	        		 <c:choose>
 	        		 	<c:when test="${task.aidUser ==null}">
-	        		 		<span style="color: #0056E3;">[任务等待认领]</span>
+	        		 		<span style="color: #0056E3;">[等待认领]</span>
 	        		 	</c:when>
 	        		 	<c:when test="${task.aidUser !=null&&task.status !=null}">
 	        		 		<span style="color: #0056E3;">${task.status}</span>
 	        		 	</c:when>
 	        		 	<c:otherwise>
-	        		 		<span style="color: red;">任务已被认领</span>
+	        		 		<span style="color: red;">任务被认领</span>
 	        		 	</c:otherwise>
 	        		 </c:choose>
         		</td>

@@ -42,15 +42,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>类型
               </label>
               <div class="layui-input-inline">
-                  <select  name="type" class="valid">
-                    <option value="加分项:学习区域管理条例">加分项:学习区域管理条例</option>
-                    <option value="加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
-                    <option value="加分项:学习状态管理条例">加分项:学习状态管理条例</option>
-                    <option value="加分项:生活状态管理条例">加分项:生活状态管理条例</option>
-                    <option value="减分项:学习区域管理条例">减分项:学习区域管理条例</option>
-                    <option value="减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
-                    <option value="减分项:学习状态管理条例">减分项:学习状态管理条例</option>
-                    <option value="减分项:生活状态管理条例">减分项:生活状态管理条例</option>
+                  <select lay-filter="select"  name="type" class="valid">
+                    <option value="学习加分项:学习区域管理条例">加分项:学习区域管理条例</option>
+                    <option value="生活加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
+                    <option value="学习加分项:学习状态管理条例">加分项:学习状态管理条例</option>
+                    <option value="生活加分项:生活状态管理条例">加分项:生活状态管理条例</option>
+                    <option value="学习减分项:学习区域管理条例">减分项:学习区域管理条例</option>
+                    <option value="生活减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
+                    <option value="学习减分项:学习状态管理条例">减分项:学习状态管理条例</option>
+                    <option value="生活减分项:生活状态管理条例">减分项:生活状态管理条例</option>
                   </select>
               </div>
           </div>
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>分数
               </label>
               <div class="layui-input-inline">
-                  <input id="L_pass" name="value"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input id="L_value" name="learnValue"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
@@ -85,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
-            $.post("admin/score/saveOrUpdate.jhtml",data.field,function(data){
+            $.post("admin/score/update.jhtml",data.field,function(data){
             	layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
@@ -98,6 +98,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
           });
           
+          form.on('select(select)', function(data){
+        	  if(data.value.indexOf("生活")>=0){
+        		 $("#L_value").attr("name","liveValue");
+        	  }else{
+        		  $("#L_value").attr("name","learnValue");
+        	  }
+        	  console.log(data.elem); //得到select原始DOM对象
+        	  console.log(data.value); //得到被选中的值
+        	  return false;
+        	});
           
         });
     </script>

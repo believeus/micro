@@ -29,25 +29,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <div class="x-body">
-        <form class="layui-form">
-        	<input name="id" type="hidden" value="${user.id}"/>
+         <form class="layui-form">
+         <input name="id" value="${user.id}" type="hidden">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>姓名:
+                  <span class="x-red">*</span>用户姓名:
               </label>
               <div class="layui-input-inline">
-                  <input value="${user.username}" name="username" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" value="${user.truename}" name="truename" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录邮箱:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" value="${user.username}" name="username"  lay-verify="required|email"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item" style="display: none;">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录密码:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" value="${user.password}" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <script>
+         		$(function(){
+        			$("option[value='${user.role.roleName}']").attr("selected",true);
+        			$("option[value='${user.sex}']").attr("selected",true);
+        			$("option[value='${user.status}']").attr("selected",true);
+        		});
+           </script>
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>用户角色:
+              </label>
+              <div class="layui-input-inline">
+                  <select  name="role.roleName" class="valid">
+                    <option value="stud">学生</option>
+                    <option value="teach">老师</option>
+                  </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>性别:
+                  <span class="x-red">*</span>用户性别:
               </label>
-              <script >
-              	$(function(){
-              		$("option[value='${user.sex}']").attr("selected",true);
-              	});
-              </script>
               <div class="layui-input-inline">
                   <select  name="sex" class="valid">
                     <option value="男">男</option>
@@ -55,44 +84,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </select>
               </div>
           </div>
-          <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>联系方式:
-              </label>
-              <div class="layui-input-inline">
-                  <input value="${user.contact }" name="contact"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
-              </div>
-          </div>
            <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>籍贯:
+                  <span class="x-red">*</span>用户状态:
               </label>
-              <div class="layui-input-inline">
-                  <input value="${user.provice }" name="provice"  lay-verify="required"  autocomplete="off" class="layui-input">
+               <div class="layui-input-inline">
+                   <c:choose>
+                   	<c:when test="${user.status eq '考核期'}">
+                   	  <select lay-filter="select" name="status" class="valid">
+                   		<option value="缓冲期">缓冲期</option>
+                   	  </select>
+                   	  <input type="hidden" name="learnValue" value="${user.learnValue==0?150:user.learnValue}"/>
+                   	  <input type="hidden" name="liveValue" value="${user.liveValue==0?150:user.liveValue}"/>
+                   	</c:when>
+                   	<c:when test="${user.status eq '缓冲期'}">
+                   	   <select lay-filter="select" name="status" class="valid">
+                   			<option value="学习期">学习期</option>
+                   	   </select>
+                   	   <input type="hidden" name="learnValue" value="${user.learnValue==0?500:user.learnValue}"/>
+                   	   <input type="hidden" name="liveValue" value="${user.liveValue==0?500:user.liveValue}"/>
+                   	</c:when>
+                   	<c:otherwise>
+                   		<select lay-filter="select" name="status" class="valid">
+                   			<option value="学习期">学习期</option>
+                   			<option value="请假期">请假期</option>
+                    		<option value="已退费">已退费</option>
+                   			<option value="已毕业">已毕业</option>
+                   	    </select>
+                   	    <input type="hidden" name="learnValue" value="${user.learnValue}"/>
+                   	    <input type="hidden" name="liveValue" value="${user.liveValue}"/>
+                   	</c:otherwise>
+                   </c:choose>
               </div>
+             
           </div>
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>紧急联系人:
+                  <span class="x-red">*</span>联系电话:
               </label>
               <div class="layui-input-inline">
-                  <input value="${user.urgentContact}" name="urgentContact"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input value="${user.phone}"  name="phone"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
               </div>
           </div>
+          
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>紧急联系电话:
+                  <span class="x-red">*</span>紧急电话:
               </label>
               <div class="layui-input-inline">
-                  <input value="${user.urgentPhone }" name="urgentPhone"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
+                  <input value="${user.urgent}" name="urgent"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
-          <input name="value" value="500" hidden="hidden" >
-           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">更新</button>
           </div>
+          
       </form>
     </div>
     <script>
@@ -104,7 +151,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
-            $.post("admin/stu/saveOrUpdata.jhtml",data.field,function(data){
+            $.post("admin/stu/update.jhtml",data.field,function(data){
             	layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
@@ -116,7 +163,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
             return false;
           });
-          
           
         });
     </script>

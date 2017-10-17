@@ -29,13 +29,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-        	<input type="hidden" name="id" value="${score.id}">
+        	<input type="hidden" name="id" value="${event.id}">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>标题
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="${score.title}" id="L_email" name="title" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" value="${event.title}" id="L_email" name="title" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
@@ -44,19 +44,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </label>
               <script>
               		$(function(){
-              			$("option[value='${score.type}']").attr("selected",true);
+              			$("option[value='${event.type}']").attr("selected",true);
               		});
               </script>
               <div class="layui-input-inline">
-                  <select  name="type" class="valid">
-                    <option value="加分项:学习区域管理条例">加分项:学习区域管理条例</option>
-                    <option value="加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
-                    <option value="加分项:学习状态管理条例">加分项:学习状态管理条例</option>
-                    <option value="加分项:生活状态管理条例">加分项:生活状态管理条例</option>
-                    <option value="减分项:学习区域管理条例">减分项:学习区域管理条例</option>
-                    <option value="减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
-                    <option value="减分项:学习状态管理条例">减分项:学习状态管理条例</option>
-                    <option value="减分项:生活状态管理条例">减分项:生活状态管理条例</option>
+                  <select lay-filter="select" name="type" class="valid">
+                    <option value="学习加分项:学习区域管理条例">加分项:学习区域管理条例</option>
+                    <option value="生活加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
+                    <option value="学习加分项:学习状态管理条例">加分项:学习状态管理条例</option>
+                    <option value="生活加分项:生活状态管理条例">加分项:生活状态管理条例</option>
+                    <option value="学习减分项:学习区域管理条例">减分项:学习区域管理条例</option>
+                    <option value="生活减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
+                    <option value="学习减分项:学习状态管理条例">减分项:学习状态管理条例</option>
+                    <option value="生活减分项:生活状态管理条例">减分项:生活状态管理条例</option>
                   </select>
               </div>
           </div>
@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>分数
               </label>
               <div class="layui-input-inline">
-                  <input value="${score.value}" id="L_pass" name="value"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input id="L_value" name="learnValue"  value="${event.learnValue==0?event.liveValue:event.learnValue}"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  	详细描述
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容"  name="description" class="layui-textarea">${score.description}</textarea>
+                  <textarea placeholder="请输入内容"  name="description" class="layui-textarea">${event.description}</textarea>
               </div>
           </div>
           <div class="layui-form-item">
@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           form.on('submit(add)', function(data){
             console.log(data.field);
             //发异步，把数据提交给php
-            $.post("admin/score/saveOrUpdate.jhtml",data.field,function(){
+            $.post("admin/score/update.jhtml",data.field,function(){
             	layer.alert("编辑成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
@@ -105,15 +105,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
           });
           
+          form.on('select(select)', function(data){
+        	  if(data.value.indexOf("生活")>=0){
+        		 $("#L_value").attr("name","liveValue");
+        	  }else{
+        		  $("#L_value").attr("name","learnValue");
+        	  }
+        	  console.log(data.elem); //得到select原始DOM对象
+        	  console.log(data.value); //得到被选中的值
+        	  return false;
+        	});
+          
           
         });
     </script>
-    <script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
   </body>
 
 </html>

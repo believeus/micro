@@ -39,14 +39,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username"  placeholder="" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
-      </div>
       <xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加积分标准','admin/score/addView.jhtml',600,400)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加积分标准','admin/score/addView.jhtml',400,450)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -55,23 +49,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <th>标题</th>
             <th>类型</th>
             <th>分数</th>
+            <th>描述</th>
             <th>操作</th>
-           </tr>
+          </tr>
         </thead>
         <tbody>
-	      <c:forEach var="score" items="${scoreList}">
+	      <c:forEach var="event" items="${eventList}">
 	        <tr>
-	            <td>${score.title}</td>
-	            <td>${score.type}</td>
-	            <td>${score.value}</td>
+	            <td>${event.title}</td>
+	            <td>${event.type}</td>
+	            <td>${event.learnValue==0?event.liveValue:event.learnValue}</td>
+	            <td>${event.description}</td>
 	            <td class="td-manage">
-	              <a title="编辑"  onclick="x_admin_show('编辑','admin/score/editView.jhtml?id=${score.id}',600,400)" href="javascript:;">
-	                <i class="layui-icon">&#xe642;</i>
+	              <a title="编辑"  onclick="x_admin_show('编辑','admin/score/editView.jhtml?id=${event.id}',600,400)" href="javascript:;">
+	                [编辑]
 	              </a>
-	              <a title="删除" onclick="del(this,${score.id})" href="javascript:;">
-	                <i class="layui-icon">&#xe640;</i>
+	              <a title="删除" onclick="del(this,${event.id})" href="javascript:;">
+	                [删除]
 	              </a>
 	            </td>
+	           
           </tr>
 	      </c:forEach>
          

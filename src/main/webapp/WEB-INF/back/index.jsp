@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,7 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <dd><a href="admin/logout.jhtml">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
         </ul>
         
     </div>
@@ -57,13 +57,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                         <a _href="admin/stu/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表</cite>
+                            <cite>学员列表</cite>
                             
                         </a>
                     </li >
                   
                 </ul>
             </li>
+            <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
@@ -79,6 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </li >
                 </ul>
             </li>
+            </c:if>
              <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
@@ -89,15 +91,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                         <a _href="admin/task/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>任务大厅</cite>
+                            <cite>积分悬赏</cite>
                         </a>
                     </li>
+                    <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
                      <li>
                         <a _href="admin/review/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>仲裁大厅</cite>
                         </a>
-                    </li>
+                     </li>
+                    </c:if>
                 </ul>
             </li>
         </ul>
@@ -113,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </ul>
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                <iframe src='admin/welcome.jhtml' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
             </div>
           </div>
         </div>

@@ -56,11 +56,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          </tr>
 			        </thead>
                     <tbody>
-                      <c:forEach var="event" items="${vList}">
+                      <c:forEach var="event" items="${eventList}">
                       	<tr>
 				            <th>${event.title}</th>
 				            <th>${event.type}</th>
-				            <th>${event.value}</th>
+				            <th>${event.learnValue==0?event.liveValue:event.learnValue}</th>
 				            <th><a href="javascript:;" onclick="bindEvent('${sessionScope.sessionUser.username}',${userId},${event.id})">[绑定]</a></th>
 			          </tr>
                       </c:forEach>
