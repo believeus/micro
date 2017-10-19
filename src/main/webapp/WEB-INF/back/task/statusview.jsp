@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
   
@@ -68,8 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </label>
               <div class="layui-input-inline">
                   <select lay-filter="select"  name="status" class="valid">
-                    <option value="任务完成">任务已经完成</option>
-                    <option value="酌情给分">任务酌情给分</option>
+                    <option value="任务已经完成">任务已经完成</option>
+                    <c:if test="${task.type ne 'betting'}">
+                    	<option value="任务酌情给分">任务酌情给分</option>
+                    </c:if>
+                    <c:if test="${task.type eq 'betting'}">
+                    	<option value="该任务未完成">该任务未完成</option>
+                    </c:if>
                   </select>
               </div>
           </div>

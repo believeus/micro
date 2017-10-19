@@ -41,30 +41,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="x-body">
       <xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加任务','admin/task/addview.jhtml',350,500)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加悬赏','admin/task/addview.jhtml',350,550)"><i class="layui-icon"></i>添加悬赏分</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-          	<th>发布人</th>
+          	<th>发布任务人</th>
             <th>任务名</th>
+            <th>任务类型</th>
             <th>开始时间</th>
             <th>完成时间</th>
-            <th>奖励积分</th>
+            <th>悬赏分</th>
             <th>状态</th>
             <th>任务认领人</th>
             <th>操作</th>
            </tr>
         </thead>
         <tbody>
-        <c:forEach var="task" items="${tasklist}">
+        <c:forEach var="task" items="${tasklist}" varStatus="status">
         	<tr>
-        		<td>${task.user.username}</td>
-        		<td>${task.title}</td>
-        		<td>${task.begintime}</td>
-        		<td>${task.endtime}</td>
-        		<td>${task.value}</td>
+        		<td><span>${task.user.username}</span></td>
+        		<td>
+        			<c:choose>
+        				<c:when test="${task.title ==null}"><span style="color: #30A89D;">请编写您的问题?</span></c:when>
+        				<c:otherwise><span>${task.title}</span></c:otherwise>
+        			</c:choose>
+        		</td>
+        		<td><span><c:choose><c:when test="${task.type=='live'}">生活分</c:when><c:when test="${task.type=='learn'}">学习分</c:when><c:otherwise>对赌积分</c:otherwise></c:choose></span></td>
+        		<td><span>${task.begintime}</span></td>
+        		<td><span>${task.endtime}</span></td>
+        		<td><span>${task.value}</span></td>
         		<td>
 	        		 <c:choose>
 	        		 	<c:when test="${task.aidUser ==null}">
@@ -80,6 +87,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		</td>
         		<td>
         			<c:choose>
+        				<c:when test="${task.status eq '任务已被指派' }">
+        					<span>${task.aidUser.truename}</span>
+        				</c:when>
         			    <c:when test="${sessionScope.sessionUser.id == task.user.id }">
         					<a href="javascript:;">[不能认领自己发布的任务]</a>
         				</c:when>
@@ -87,40 +97,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         					<a href="javascript:;" onclick="icandoIt(${task.id},${sessionScope.sessionUser.id })">[申请认领该任务]</a>
         				</c:when>
         				<c:when test="${task.aidUser !=null }">
-        					<span style="color: red;font-size: 18px;">[${task.aidUser.username}]</span>
+        					<span style="color: red;font-size: 18px;">[${task.aidUser.truename}]</span>
         				</c:when>
         			</c:choose>
         		</td>
         		<td class="td-manage">
-        		
-        		<c:choose>
-					<c:when test="${sessionScope.sessionUser.id == task.user.id && task.aidUser==null}">
-						<a title="编辑"  href="javascript:;" onclick="del(this,${task.id})">
-	          				[删除任务]
-	           			</a>
-	           			 <a title="编辑"  onclick="x_admin_show('编辑','admin/task/editview.jhtml?taskId=${task.id}',600,500)" href="javascript:;">
-	          				[编辑任务]
-	             		</a>
-					</c:when>
-					<c:when test="${sessionScope.sessionUser.id == task.user.id && task.aidUser!=null}">
-						<a title="编辑"  onclick="x_admin_show('编辑','admin/task/taskstatus.jhtml?taskId=${task.id}',600,500)" href="javascript:;">
-	          				[任务状态]
-	           			</a>
-					</c:when>
-					<c:when test="${sessionScope.sessionUser.id == task.user.id && task.status !=null}">
-						<a title="编辑"   href="javascript:;">
-	          				[任务已结束:${task.status}]
-	           			</a>
-					</c:when>
-					<c:otherwise>
-						<a title="编辑"  href="javascript:;">
-	          				[无权查看]
-	           			 </a>
-					</c:otherwise>
-        		</c:choose>
-	            
-	             
-	             
+	        		<c:choose>
+	        			<c:when test="${task.status eq '任务已经完成' }">
+	        				<span>任务已经结束</span>
+	        			</c:when>
+						<c:when test="${sessionScope.sessionUser.id == task.user.id && task.aidUser==null}">
+							<a title="编辑"  href="javascript:;" onclick="del(this,${task.id})">[删除任务]</a>
+		           			<a title="编辑"  onclick="x_admin_show('编辑','admin/task/editview.jhtml?taskId=${task.id}',600,500)" href="javascript:;">[编辑任务]</a>
+						</c:when>
+						<c:when test="${sessionScope.sessionUser.id == task.user.id && task.aidUser!=null}">
+							<a title="编辑"  onclick="x_admin_show('编辑','admin/task/taskstatus.jhtml?taskId=${task.id}',600,500)" href="javascript:;">${task.status}</a>
+						</c:when>
+						<c:otherwise>
+		          			<span>[无权查看]</span>
+						</c:otherwise>
+	        		</c:choose>
             	</td>
         	</tr>
         </c:forEach>

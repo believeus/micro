@@ -10,8 +10,8 @@ public class Ttask extends TbaseEntity {
 	private String title;
 	private String begintime;
 	private String endtime;
-	private int learnValue;
-	private int liveValue;
+	private String type;
+	private Integer value;
 	//发布任务的人
 	private Tuser user;
 	//接受任务的人
@@ -19,6 +19,16 @@ public class Ttask extends TbaseEntity {
 	
 	private String message;
 
+	public Ttask() {
+		
+	}
+	public Ttask(Tuser user,String type,int value,Tuser aidUser,String status){
+		this.user=user;
+		this.type=type;
+		this.aidUser=aidUser;
+		this.value=value;
+		this.status=status;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -42,21 +52,13 @@ public class Ttask extends TbaseEntity {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
-	
-	public int getLearnValue() {
-		return learnValue;
+
+	public Integer getValue() {
+		return value;
 	}
 
-	public void setLearnValue(int learnValue) {
-		this.learnValue = learnValue;
-	}
-
-	public int getLiveValue() {
-		return liveValue;
-	}
-
-	public void setLiveValue(int liveValue) {
-		this.liveValue = liveValue;
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 
 	public String getMessage() {
@@ -75,6 +77,15 @@ public class Ttask extends TbaseEntity {
 
 	public void setAidUser(Tuser aidUser) {
 		this.aidUser = aidUser;
+	}
+
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@ManyToOne

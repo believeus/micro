@@ -11,8 +11,8 @@ public class Tevent extends TbaseEntity {
 	private static final long serialVersionUID = -2097455863944057668L;
 	private String title;
 	private String type;
-	private int liveValue;
-	private int learnValue;
+	private String typeName;
+	private int value;
 	private String description;
 	public String getType() {
 		return type;
@@ -30,21 +30,12 @@ public class Tevent extends TbaseEntity {
 		this.title = title;
 	}
 	
-
-	public int getLiveValue() {
-		return liveValue;
+	public int getValue() {
+		return value;
 	}
 
-	public void setLiveValue(int liveValue) {
-		this.liveValue = liveValue;
-	}
-
-	public int getLearnValue() {
-		return learnValue;
-	}
-
-	public void setLearnValue(int learnValue) {
-		this.learnValue = learnValue;
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	public String getDescription() {
@@ -53,6 +44,14 @@ public class Tevent extends TbaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 	
 	

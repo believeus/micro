@@ -31,49 +31,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form class="layui-form">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>标题
+                  <span class="x-red">*</span>用户姓名:
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="title" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" id="L_email" name="truename" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录邮箱:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" name="username"  lay-verify="required|email"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>登录密码:
+              </label>
+              <div class="layui-input-inline">
+                  <input id="L_pass" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>用户角色:
+              </label>
+              <div class="layui-input-inline">
+                  <select  name="role.roleName" class="valid">
+                     <option value="stud">学生</option>
+                    <option value="teach">老师</option>
+                  </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>类型
+                  <span class="x-red">*</span>用户性别:
               </label>
               <div class="layui-input-inline">
-                  <select lay-filter="select"  name="type" class="valid">
-                    <option value="学习加分项:学习区域管理条例">加分项:学习区域管理条例</option>
-                    <option value="生活加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
-                    <option value="学习加分项:学习状态管理条例">加分项:学习状态管理条例</option>
-                    <option value="生活加分项:生活状态管理条例">加分项:生活状态管理条例</option>
-                    <option value="学习减分项:学习区域管理条例">减分项:学习区域管理条例</option>
-                    <option value="生活减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
-                    <option value="学习减分项:学习状态管理条例">减分项:学习状态管理条例</option>
-                    <option value="生活减分项:生活状态管理条例">减分项:生活状态管理条例</option>
+                  <select  name="sex" class="valid">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+              </div>
+          </div>
+           <div class="layui-form-item" style="display: none;">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>用户状态:
+              </label>
+               <div class="layui-input-inline">
+                  <select  name="status" class="valid">
+                    <option value="考核期">考核期</option>
                   </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>分数
+                  <span class="x-red">*</span>联系电话:
               </label>
               <div class="layui-input-inline">
-                  <input id="L_value" name="learnValue"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input id="L_pass" name="phone"  lay-verify="required|phone"  autocomplete="off" class="layui-input">
               </div>
           </div>
+          
           <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  	详细描述
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>紧急电话:
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容" id="desc" name="description" class="layui-textarea"></textarea>
+                  <input id="L_pass" name="urgent"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
+          <input name="liveValue" value="50" hidden="hidden" >
+          <input name="learnValue" value="50" hidden="hidden" >
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit=""> 增加</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>
           </div>
+          
       </form>
     </div>
     <script>
@@ -85,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
-            $.post("admin/score/update.jhtml",data.field,function(data){
+            $.post("admin/studn/update.jhtml",data.field,function(data){
             	layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
@@ -98,19 +133,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
           });
           
-          form.on('select(select)', function(data){
-        	  if(data.value.indexOf("生活")>=0){
-        		 $("#L_value").attr("name","liveValue");
-        	  }else{
-        		  $("#L_value").attr("name","learnValue");
-        	  }
-        	  console.log(data.elem); //得到select原始DOM对象
-        	  console.log(data.value); //得到被选中的值
-        	  return false;
-        	});
+          
           
         });
     </script>
+    
   </body>
 
 </html>

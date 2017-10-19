@@ -32,9 +32,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">${sessionScope.sessionUser.username }</a>
+            <a href="javascript:;">${sessionScope.sessionUser.truename}</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-              <dd><a href="javascript:;" onclick="x_admin_show('更改密码','admin/stu/uppasswdView.jhtml?userId=${sessionScope.sessionUser.id}',500,200)">更改密码</a></dd>
+              <dd><a href="javascript:;" onclick="x_admin_show('更改密码','admin/studn/uppasswdView.jhtml?userId=${sessionScope.sessionUser.id}',500,200)">更改密码</a></dd>
               <dd><a href="admin/logout.jhtml">退出</a></dd>
             </dl>
           </li>
@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="admin/stu/list.jhtml">
+                        <a _href="admin/studn/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>学员列表</cite>
                             
@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="admin/score/list.jhtml">
+                        <a _href="admin/event/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>设置积分</cite>
                         </a>

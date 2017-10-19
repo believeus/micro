@@ -15,67 +15,68 @@ import cn.believeus.model.TuserEvent;
 import cn.believeus.service.MySQLService;
 
 @Controller
-public class StuController {
+public class StudnController {
 	
 	@Resource
 	private MySQLService service;
 	
-	@RequestMapping("/admin/stu/list")
+	@RequestMapping("/admin/studn/list")
 	public ModelAndView list(){
 		ModelAndView modelView=new ModelAndView();
 		List<?> userlist = service.findObjectList(Tuser.class, 15);
 		modelView.addObject("userlist", userlist);
-		modelView.setViewName("/WEB-INF/back/stu/list.jsp");
+		modelView.setViewName("/WEB-INF/back/studn/list.jsp");
 		return modelView;
 	}
 	
-	@RequestMapping("/admin/stu/editView")
+	@RequestMapping("/admin/studn/editView")
 	public ModelAndView editView(int id){
 		ModelAndView modelView=new ModelAndView();
 		Tuser user =(Tuser)service.findObject(Tuser.class, id);
 		modelView.addObject("user", user);
-		modelView.setViewName("/WEB-INF/back/stu/edit.jsp");
+		modelView.setViewName("/WEB-INF/back/studn/edit.jsp");
 		return modelView;
 	}
 	
-	@RequestMapping("/admin/stu/addView")
+	@RequestMapping("/admin/studn/addView")
 	public String addView(){
-		return "/WEB-INF/back/stu/add.jsp";
+		return "/WEB-INF/back/studn/add.jsp";
 	}
 	
-	@RequestMapping("/admin/stu/update")
+	@RequestMapping("/admin/studn/update")
 	public @ResponseBody String update(Tuser user){
 		service.saveOrUpdate(user);
 		return "true";
 	}
 	
-	@RequestMapping("/admin/stu/del")
+	@RequestMapping("/admin/studn/del")
 	public @ResponseBody String del(int id){
 		service.delete(Tuser.class, id);
 		return "true";
 	}
 	
-	@RequestMapping("/admin/stu/myDo")
-	public ModelAndView myDo(int userId){
+	@RequestMapping("/admin/studn/doneView")
+	public ModelAndView doneView(int userId,String type){
 		ModelAndView modelView=new ModelAndView();
-		List<?> userEventList=service.findObjectList(TuserEvent.class, "userId", userId,15);
-		modelView.setViewName("/WEB-INF/back/stu/eventlist.jsp");
+		String hql="from TuserEvent e where e.userId="+userId+" and type='"+type+"'";
+		List<?> userEventList=service.findObjectList(hql, 10);
+		modelView.setViewName("/WEB-INF/back/studn/eventlist.jsp");
 		modelView.addObject("userEventList", userEventList);
 		modelView.addObject("userId", userId);
 		return modelView;
 	}
 	
-	@RequestMapping("/admin/stu/eventView")
+	@RequestMapping("/admin/studn/eventView")
 	public ModelAndView eventView(int userId){
 		ModelAndView modelView=new ModelAndView();
 		List<?> eventList = service.findObjectList(Tevent.class, 8);
-		modelView.setViewName("/WEB-INF/back/stu/bindevent.jsp");
+		modelView.setViewName("/WEB-INF/back/studn/bindevent.jsp");
 		modelView.addObject("eventList",eventList);
 		modelView.addObject("userId", userId);
 		return modelView;
 	}
 	
-	@RequestMapping("/admin/stu/bindEvent")
+	@RequestMapping("/admin/studn/bindEvent")
 	public @ResponseBody String bindEvent(String username,int userId,int eventId){
 		Tevent event =(Tevent)service.findObject(Tevent.class, eventId);
 		TuserEvent userEvent=new TuserEvent();
@@ -84,15 +85,12 @@ public class StuController {
 		userEvent.setTitle(event.getTitle());
 		userEvent.setType(event.getType());
 		userEvent.setObserver(username);
-		int learnValue=event.getLearnValue();
-		int liveValue=event.getLiveValue();
-		switch (learnValue) {
-			case 0:
-				userEvent.setLiveValue(liveValue);
-				break;
-			default:
-				userEvent.setLearnValue(learnValue);
-				break;
+		int value=event.getValue();
+		String type = userEvent.getType();
+		if(type.equals("live")){
+			userEvent.setValue(value);
+		}else {
+			userEvent.setValue(value);
 		}
 		//审核状态
 		userEvent.setStatus("事件发生");
@@ -101,23 +99,23 @@ public class StuController {
 		service.saveOrUpdate(userEvent);
 		return "true";
 	}
-	@RequestMapping("/admin/stu/delBindEvent")
+	@RequestMapping("/admin/studn/delBindEvent")
 	public @ResponseBody String delBindEvent(int userEventId){
 		TuserEvent userEvent = (TuserEvent)service.findObject(TuserEvent.class, userEventId);
 		service.delete(userEvent);
 		return "true";
 	}
 	/**申请驳回页面*/
-	@RequestMapping("/admin/stu/disagreeView")
+	@RequestMapping("/admin/studn/disagreeView")
 	public ModelAndView disagreeView(int userEventId){
 		ModelAndView modelView=new ModelAndView();
 		modelView.addObject("userEventId",userEventId);
-		modelView.setViewName("/WEB-INF/back/stu/unAgree.jsp");
+		modelView.setViewName("/WEB-INF/back/studn/unAgree.jsp");
 		return modelView;
 	}
 	
 	/**不同意*/
-	@RequestMapping("/admin/stu/disagree")
+	@RequestMapping("/admin/studn/disagree")
 	public @ResponseBody String disagree(int userEventId,String message){
 		TuserEvent userEvent = (TuserEvent)service.findObject(TuserEvent.class, userEventId);
 		userEvent.setMessage(message);
@@ -126,7 +124,7 @@ public class StuController {
 		return "true";
 	}
 	
-	@RequestMapping("/admin/stu/uppasswd")
+	@RequestMapping("/admin/studn/uppasswd")
 	public @ResponseBody String uppasswd(Integer userId,String password){
 		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
 		user.setPassword(password);
@@ -134,11 +132,11 @@ public class StuController {
 		return "true";
 	}
 	
-	@RequestMapping("/admin/stu/uppasswdView")
+	@RequestMapping("/admin/studn/uppasswdView")
 	public ModelAndView uppasswdView(Integer userId){
 		ModelAndView modelview=new ModelAndView();
 		Tuser user = (Tuser)service.findObject(Tuser.class, userId);
-		modelview.setViewName("/WEB-INF/back/stu/uppassswd.jsp");
+		modelview.setViewName("/WEB-INF/back/studn/uppassswd.jsp");
 		modelview.addObject("user", user);
 		return modelview;
 	}

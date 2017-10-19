@@ -48,16 +48,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tbody>
                      <c:forEach var="userEvent" items="${userEventList}">
                      	<tr>
-                        <td>${userEvent.title}</td>
-                        <td>${userEvent.type }</td>
-                        <td>${userEvent.learnValue==0?userEvent.liveValue:userEvent.learnValue}</td>
-                        <td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
-                        <td>${userEvent.observer}</td>
+                        <td><span>${userEvent.title}</span></td>
+                        <td><span>${userEvent.type=="live"?"生活分":"学习分"}</span></td>
+                        <td><span>${userEvent.value}</span></td>
+                        <td><span><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></span></td>
+                        <td><span>${userEvent.observer}</span></td>
                         <td> 
-                          	
                           	<c:choose>
                           		<c:when test="${userEvent.status eq '事件发生'}">
-                          			<a href="javascript:;" onclick="x_admin_show('申请仲裁信息填写','admin/stu/disagreeView.jhtml?userId=${userId}&userEventId=${userEvent.id}',450,300)" >&nbsp;&nbsp;[申请仲裁]</a>
+                          			<a href="javascript:;" onclick="x_admin_show('申请仲裁信息填写','admin/studn/disagreeView.jhtml?userId=${userId}&userEventId=${userEvent.id}',450,300)" >&nbsp;&nbsp;[申请仲裁]</a>
                           		</c:when>
                           		<c:otherwise>
                           			<a href="javascript:;" >[${userEvent.status}]</a>
@@ -92,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 function del(obj,userEventId){
         layer.confirm('确认要删除吗？',function(index){
             //发异步删除数据
-            var url='admin/stu/delBindEvent.jhtml?userEventId='+userEventId;
+            var url='admin/studn/delBindEvent.jhtml?userEventId='+userEventId;
             $.post(url,function(){
 	            	 $(obj).parents("tr").remove();
 	                 layer.msg('已删除!',{icon:1,time:1000});

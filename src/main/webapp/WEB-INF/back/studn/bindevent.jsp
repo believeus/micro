@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 	<script>
 		var bindEvent=function(username,userId,eventId){
-			var url="admin/stu/bindEvent.jhtml?username="+username+"&userId="+userId+"&eventId="+eventId;
+			var url="admin/studn/bindEvent.jhtml?username="+username+"&userId="+userId+"&eventId="+eventId;
 			 //发异步，把数据提交给php
             $.post(url,function(data){
 	           	layer.alert("执行成功", {icon: 6},function () {

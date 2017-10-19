@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-        <input type="hidden" name="userEventId" value="${userEvent.id}">
+        <input type="hidden" name="userEventid" value="${userEvent.id}">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>标题
@@ -62,8 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>分数
               </label>
               <div class="layui-input-inline">
-              <input value="${userEvent.liveValue}"  name="liveValue"  lay-verify="required"  autocomplete="off" class="layui-input">
-              <input value="${userEvent.learnValue}"  name="learnValue"  lay-verify="required"  autocomplete="off" class="layui-input">
+              <input value="${userEvent.value}"  name="value"  lay-verify="required"  autocomplete="off" class="layui-input">
                  
               </div>
           </div>

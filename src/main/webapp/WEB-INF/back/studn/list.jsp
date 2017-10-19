@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="x-body">
       <xblock>
       	  <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
-        	<button class="layui-btn" onclick="x_admin_show('添加程序员','admin/stu/addView.jhtml',400,550)"><i class="layui-icon"></i>添加</button>
+        	<button class="layui-btn" onclick="x_admin_show('添加程序员','admin/studn/addView.jhtml',400,550)"><i class="layui-icon"></i>添加</button>
          </c:if>
       </xblock>
       <table class="layui-table">
@@ -53,8 +53,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <th>用户角色</th>
             <th>报名时间:</th>
             <th>状态</th>
-            <th>生活状态积分值</th>
-            <th>学习状态积分值</th>
+            <th>生活分</th>
+            <th>学习分</th>
             <th>操作</th>
            </tr>
         </thead>
@@ -75,12 +75,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        		</td>
 	        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
 	        		<td><span>${user.status}</span></td>
-	        		<td><span>${user.liveValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
-	        		<td><span>${user.learnValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
+	        		<td><span>${user.liveValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=live',850,500)" >&nbsp;&nbsp;[生活积分详情]</a></td>
+	        		<td><span>${user.learnValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=learn',850,500)" >&nbsp;&nbsp;[学习积分详情]</a></td>
 	        		<td class="td-manage">
-	        			 <a title="编辑"  onclick="x_admin_show('编辑','admin/stu/editView.jhtml?id=${user.id}',400,580)" href="javascript:;">[编辑]</a>
+	        			 <a title="编辑"  onclick="x_admin_show('编辑','admin/studn/editView.jhtml?id=${user.id}',400,580)" href="javascript:;">[编辑]</a>
 		        		 <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
-				               <a href="javascript:;" onclick="x_admin_show('绑定事件','admin/stu/eventView.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[绑定事件]</a>
+				               <a href="javascript:;" onclick="x_admin_show('绑定事件','admin/studn/eventView.jhtml?userId=${user.id}',850,500)" >&nbsp;&nbsp;[绑定事件]</a>
 			               	   <a href="javascript:;" onclick="del(this,${user.id})">[删除]</a>
 			             </c:if>
 		      
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       function del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              var url="admin/stu/del.jhtml?id="+id;
+              var url="admin/studn/del.jhtml?id="+id;
               $.post(url,function(){
             	  $(obj).parents("tr").remove();
                   layer.msg('已删除!',{icon:1,time:1000});

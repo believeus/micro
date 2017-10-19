@@ -38,15 +38,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <input type="text"   name="title" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>类型
+              </label>
+              <div class="layui-input-inline">
+                  <select lay-filter="select"  name="type" class="valid">
+                    <option value="learn">学习分</option>
+                    <option value="live">生活分</option>
+                  </select>
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>积分值
               </label>
               <div class="layui-input-inline">
-                  <input type="text"   name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
+                  <input type="text"  name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div id="form-value" class="layui-form-item" >
+          <div  class="layui-form-item" >
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>开始日期
               </label>
@@ -54,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <input class="layui-input" placeholder="开始日" name="begintime" id="begintime">
               </div>
           </div>
-          <div id="form-value" class="layui-form-item" >
+          <div  class="layui-form-item" >
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>结束日期
               </label>
@@ -99,16 +110,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return false;
           });
           
-          form.on('select(select)', function(data){
-        	  if(data.value=="酌情增减积分"){
-        		  $("#form-value").show();
-        	  }else{
-        		  $("#form-value").hide();
-        	  }
-        	  console.log(data.elem); //得到select原始DOM对象
-        	  console.log(data.value); //得到被选中的值
-        	  return false;
-        	});
           
         });
         

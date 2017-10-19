@@ -13,39 +13,39 @@ import cn.believeus.model.Tevent;
 import cn.believeus.service.MySQLService;
 
 @Controller
-public class ScoreController {
+public class EventController {
 	@Resource
 	private MySQLService service;
 	
-	@RequestMapping("/admin/score/list")
+	@RequestMapping("/admin/event/list")
 	public ModelAndView listView(){
 		ModelAndView modelView=new ModelAndView();
 		List<?> eventList = service.findObjectList(Tevent.class, 15);
-		modelView.setViewName("/WEB-INF/back/score/list.jsp");
+		modelView.setViewName("/WEB-INF/back/event/list.jsp");
 		modelView.addObject("eventList", eventList);
 		return modelView;
 	}
 	
-	@RequestMapping("/admin/score/addView")
+	@RequestMapping("/admin/event/addView")
 	public String addView(){
-		return "/WEB-INF/back/score/add.jsp";
+		return "/WEB-INF/back/event/add.jsp";
 	}
 	
-	@RequestMapping("/admin/score/editView")
+	@RequestMapping("/admin/event/editView")
 	public ModelAndView editView(int id){
 		ModelAndView modelView=new ModelAndView();
 		Tevent event = (Tevent)service.findObject(Tevent.class, id);
-		modelView.setViewName("/WEB-INF/back/score/edit.jsp");
+		modelView.setViewName("/WEB-INF/back/event/edit.jsp");
 		modelView.addObject("event",event);
 		return modelView;
 	}
-	@RequestMapping("/admin/score/update")
-	public @ResponseBody String update(Tevent score){
-		service.saveOrUpdate(score);
+	@RequestMapping("/admin/event/update")
+	public @ResponseBody String update(Tevent event){
+		service.saveOrUpdate(event);
 		return "true";
 	}
 	
-	@RequestMapping("/admin/score/del")
+	@RequestMapping("/admin/event/del")
 	public @ResponseBody String del(int id){
 		service.delete(Tevent.class, id);
 		return "true";

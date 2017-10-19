@@ -27,6 +27,7 @@ public class InitAdmin implements ApplicationListener<ApplicationEvent>{
 			Tuser user = (Tuser)service.findObject(Tuser.class, Variables.USER_NAME, "admin");
 			if(user == null){
 				 user = new Tuser();
+				 user.setTruename("admin");
 				 user.setUsername("admin");
 				 user.setPassword("admin");
 				 user.setSex("保密");

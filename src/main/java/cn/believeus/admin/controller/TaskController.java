@@ -52,11 +52,9 @@ public class TaskController {
 	}
 
 	@ModelAttribute("task")
-	public void populateModel(@RequestParam(required = false) Integer id,
-			Model model, HttpServletRequest req) {
+	public void populateModel(@RequestParam(required = false) Integer id,Model model, HttpServletRequest req) {
 		String uri = req.getRequestURI().toString();
-		if (uri.contains("admin/task/update")
-				|| uri.contains("admin/task/upstatus")) {
+		if (uri.contains("admin/task/update")|| uri.contains("admin/task/upstatus")) {
 			Ttask task = (Ttask) service.findObject(Ttask.class, id);
 			model.addAttribute("task", task);
 		}
@@ -76,30 +74,60 @@ public class TaskController {
 		Tuser user = task.getUser();
 		Tuser aidUser = task.getAidUser();
 		TuserEvent userEvent = new TuserEvent();
-		Integer learnValue = task.getLearnValue();
-		Integer liveValue = task.getLiveValue();
-		switch (learnValue) {
-		case 0:
-			user.setLiveValue(user.getLiveValue() - liveValue);
-			aidUser.setLiveValue(aidUser.getLiveValue() + liveValue);
-			userEvent.setLiveValue(liveValue);
-			break;
-		default:
-			user.setLearnValue(user.getLearnValue() - learnValue);
-			aidUser.setLearnValue(aidUser.getLearnValue() + learnValue);
-			userEvent.setLearnValue(learnValue);
-			break;
+		Integer value = task.getValue();
+		String type = task.getType();
+		
+		if(type.equals("live")){
+			if(task.getStatus().equals("该任务未完成")){
+				aidUser.setLiveValue(aidUser.getLiveValue() - value);
+				userEvent.setValue((-value));
+			}else if(task.getStatus().equals("任务酌情给分")){
+				//如果是管理员发布的任务,管理员不减分,并且给接受任务的人加分
+				if(user.getRole().getRoleName().equals("admin")){
+					user.setLiveValue(user.getLiveValue() - value);
+				}
+				aidUser.setLiveValue(aidUser.getLiveValue() + value);
+				userEvent.setValue(value);
+			}
+		//添加学习分
+		}else if(type.equals("learn")) {
+			if(task.getStatus().equals("该任务未完成")){
+				aidUser.setLearnValue(aidUser.getLearnValue() - value);
+				userEvent.setValue((-value));
+			//酌情给分
+			}else if(task.getStatus().equals("任务酌情给分")){
+				//如果是管理员发布的任务,管理员不减分
+				if(user.getRole().getRoleName().equals("admin")){
+					user.setLearnValue(user.getLearnValue() - value);
+				}
+				aidUser.setLearnValue(aidUser.getLearnValue() + value);
+				userEvent.setValue(value);
+			}
+		//对赌积分,完成任务加分,完成不了任务扣分
+		}else if(type.equals("betting")){
+			if(task.getStatus().equals("该任务未完成")){
+				aidUser.setLearnValue(aidUser.getLearnValue() - value);
+				userEvent.setValue((-value));
+			}else if(task.getStatus().equals("任务已经完成")){
+				//如果是管理员发布的任务,管理员不减分
+				if(user.getRole().getRoleName().equals("admin")){
+					user.setLearnValue(user.getLearnValue() - value);
+				}
+				aidUser.setLearnValue(aidUser.getLearnValue() + value);
+				userEvent.setValue(value);
+			}
 		}
 		// 如果不是管理员则给救助者减分
-		service.saveOrUpdate(user);
+		if(user.getRole().getRoleName().equals("admin")){
+			service.saveOrUpdate(user);
+		}
 		service.saveOrUpdate(aidUser);
 		// 将任务放入用户事件中
-		
 		userEvent.setTitle(task.getTitle());
 		userEvent.setUserId(aidUser.getId());
 		userEvent.setTruename(aidUser.getTruename());
 		userEvent.setObserver(task.getUser().getUsername());
-		userEvent.setType("加分项:领取任务大厅任务");
+		userEvent.setType(type);
 		userEvent.setStatus(task.getStatus());
 		service.saveOrUpdate(userEvent);
 		service.saveOrUpdate(task);

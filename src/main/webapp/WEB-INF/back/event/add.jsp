@@ -29,34 +29,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-        	<input type="hidden" name="id" value="${event.id}">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>标题
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="${event.title}" id="L_email" name="title" lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="text" id="L_email" name="title" lay-verify="required" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>分类
+              </label>
+              <div class="layui-input-inline">
+                  <select lay-filter="select"  name="type" class="valid">
+                    <option value="live">生活分</option>
+                    <option value="learn">学习分</option>
+                  </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">
                   <span class="x-red">*</span>类型
               </label>
-              <script>
-              		$(function(){
-              			$("option[value='${event.type}']").attr("selected",true);
-              		});
-              </script>
               <div class="layui-input-inline">
-                  <select lay-filter="select" name="type" class="valid">
-                    <option value="学习加分项:学习区域管理条例">加分项:学习区域管理条例</option>
-                    <option value="生活加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
-                    <option value="学习加分项:学习状态管理条例">加分项:学习状态管理条例</option>
-                    <option value="生活加分项:生活状态管理条例">加分项:生活状态管理条例</option>
-                    <option value="学习减分项:学习区域管理条例">减分项:学习区域管理条例</option>
-                    <option value="生活减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
-                    <option value="学习减分项:学习状态管理条例">减分项:学习状态管理条例</option>
-                    <option value="生活减分项:生活状态管理条例">减分项:生活状态管理条例</option>
+                  <select  name="typeName" class="valid">
+                     <option value="加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
+                     <option value="加分项:生活状态管理条例">加分项:生活状态管理条例</option>
+                     <option value="减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
+                     <option value="减分项:生活状态管理条例">减分项:生活状态管理条例</option>
                   </select>
               </div>
           </div>
@@ -65,20 +66,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>分数
               </label>
               <div class="layui-input-inline">
-                  <input id="L_value" name="learnValue"  value="${event.learnValue==0?event.liveValue:event.learnValue}"  lay-verify="required"  autocomplete="off" class="layui-input">
+                  <input id="L_value" name="value"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
-                 	详细描述
+                  	详细描述
               </label>
               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容"  name="description" class="layui-textarea">${event.description}</textarea>
+                  <textarea placeholder="请输入内容" id="desc" name="description" class="layui-textarea"></textarea>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">更新</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit=""> 增加</button>
           </div>
       </form>
     </div>
@@ -90,10 +91,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          
           //监听提交
           form.on('submit(add)', function(data){
-            console.log(data.field);
             //发异步，把数据提交给php
-            $.post("admin/score/update.jhtml",data.field,function(){
-            	layer.alert("编辑成功", {icon: 6},function () {
+            $.post("admin/event/update.jhtml",data.field,function(data){
+            	layer.alert("增加成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
                     //关闭当前frame
@@ -106,16 +106,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           });
           
           form.on('select(select)', function(data){
-        	  if(data.value.indexOf("生活")>=0){
-        		 $("#L_value").attr("name","liveValue");
+        	  $("#typeName option").remove();
+        	  if(data.value=="live"){
+        		 $("#typeName").append("<option value='减分项:生活状态管理条例'>减分项:生活状态管理条例</option>");
+        		 $("#typeName").append("<option value='加分项:生活状态管理条例'>加分项:生活状态管理条例</option>");
+        		 $("#typeName").append("<option value='减分项:住宿区域管理条例'>减分项:住宿区域管理条例</option>");
+        		 $("#typeName").append("<option value='加分项:住宿区域管理条例'>加分项:住宿区域管理条例</option>");
         	  }else{
-        		  $("#L_value").attr("name","learnValue");
+        		  $("#typeName").append("<option value='加分项:学习区域管理条例'>加分项:学习区域管理条例</option>");
+        		  $("#typeName").append("<option value='加分项:学习状态管理条例'>加分项:学习状态管理条例</option>");
+        		  $("#typeName").append("<option value='减分项:学习区域管理条例'>减分项:学习区域管理条例</option>");
+        		  $("#typeName").append("<option value='减分项:学习状态管理条例'>减分项:学习状态管理条例</option>");
         	  }
-        	  console.log(data.elem); //得到select原始DOM对象
-        	  console.log(data.value); //得到被选中的值
+        	  form.render();
         	  return false;
         	});
-          
           
         });
     </script>

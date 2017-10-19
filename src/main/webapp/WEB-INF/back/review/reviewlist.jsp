@@ -59,11 +59,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <tbody>
 		        <c:forEach var="userEvent" items="${userEventList}">
 		        	<tr>
-		        		<td>${userEvent.truename}<a href="javascript:;" onclick="x_admin_show('积分详情','admin/stu/myDo.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
-		        		<td>${userEvent.title}</td>
-		        		<td><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></td>
-		        		<td>${userEvent.learnValue==0?userEvent.liveValue:userEvent.learnValue}</td>
-		        		<td>${userEvent.status}</td>
+		        		<td><span>${userEvent.truename}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
+		        		<td><span>${userEvent.title}</span></td>
+		        		<td><span><date:date value="${userEvent.createTime}" pattern="yyyy-MM-dd"></date:date></span></td>
+		        		<td><span>${userEvent.value}</span></td>
+		        		<td><span>${userEvent.status}</span></td>
 		        		<td class="td-manage">
 		        		  <c:choose>
 		        		    <c:when test="${sessionScope.sessionUser.username !='admin' }">
@@ -104,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 function del(obj,userEventId){
         layer.confirm('确认要删除吗？',function(index){
             //发异步删除数据
-            var url='admin/stu/delBindEvent.jhtml?userEventId='+userEventId;
+            var url='admin/studn/delBindEvent.jhtml?userEventId='+userEventId;
             $.post(url,function(){
 	            	 $(obj).parents("tr").remove();
 	                 layer.msg('已删除!',{icon:1,time:1000});

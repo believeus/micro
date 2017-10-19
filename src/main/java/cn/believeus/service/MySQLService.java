@@ -18,6 +18,9 @@ public class MySQLService{
 		mysqlDao.saveOrUpdate(object);
 	}
 	
+	public void merge(Object object){
+		mysqlDao.merge(object);
+	}
 	
 	public void delete(Class<?> clazz, Integer id) {
 		mysqlDao.delete(clazz, id);
@@ -90,7 +93,10 @@ public class MySQLService{
 	public List<?> findObjectList(String hql, Integer num) {
 		return mysqlDao.findObjectList(hql,num);
 	}
-
+	
+	public List<?> findObjectList(String hql) {
+		return mysqlDao.findObjectList(hql);
+	}
 	public Page<?> findObjectList(String hql, Pageable pageable) {
 		return (Page<?>) mysqlDao.getPageDateList(hql,pageable );
 	}

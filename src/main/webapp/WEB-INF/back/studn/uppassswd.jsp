@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
   
@@ -29,19 +30,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="x-body">
         <form class="layui-form">
-         <input name="userEventId" value="${userEventId}" type="hidden">
+        	<input name="userId" type="hidden" value="${user.id}"/>
           <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>申请驳回原因:
+              <label for="L_email" class="layui-form-label">
+                  <span class="x-red">*</span>新密码:
               </label>
-               <div class="layui-input-inline">
-                  <textarea placeholder="请输入内容" lay-verify="required" name="message" class="layui-textarea"></textarea>
+              <div class="layui-input-inline">
+                  <input  name="password" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
-           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">申请仲裁</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">更新</button>
           </div>
       </form>
     </div>
@@ -54,13 +54,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
-            $.post("admin/stu/disagree.jhtml",data.field,function(data){
-            	layer.alert("提交成功", {icon: 6},function () {
+            $.post("admin/studn/uppasswd.jhtml",data.field,function(data){
+            	layer.alert("密码更新成功", {icon: 6},function () {
                     // 获得frame索引
                     var index = parent.layer.getFrameIndex(window.name);
                     //关闭当前frame
                     parent.layer.close(index);
-                    parent.location.reload();
                 });
             });
             

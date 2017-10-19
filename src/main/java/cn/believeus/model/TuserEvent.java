@@ -18,8 +18,7 @@ public class TuserEvent extends TbaseEntity {
 	private String title;
 
 	private String type;
-	private int liveValue;
-	private int learnValue;
+	private int value;
 	private String message;
 
 	public int getUserId() {
@@ -62,20 +61,13 @@ public class TuserEvent extends TbaseEntity {
 		this.type = type;
 	}
 
-	public int getLiveValue() {
-		return liveValue;
+	
+	public int getValue() {
+		return value;
 	}
 
-	public void setLiveValue(int liveValue) {
-		this.liveValue = liveValue;
-	}
-
-	public int getLearnValue() {
-		return learnValue;
-	}
-
-	public void setLearnValue(int learnValue) {
-		this.learnValue = learnValue;
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	public String getMessage() {
