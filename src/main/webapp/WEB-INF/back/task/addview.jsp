@@ -44,8 +44,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </label>
               <div class="layui-input-inline">
                   <select lay-filter="select"  name="type" class="valid">
-                    <option value="learn">学习分</option>
-                    <option value="live">生活分</option>
+                    <option value="reward-learn">[悬赏]-学习分</option>
+                    <option value="reward-live">[悬赏]-生活分</option>
+                    <option value="assign-learn">[指派]-学习分</option>
+                    <option value="assign-live">[指派]-生活分</option>
+                    <option value="betting-learn">[对赌]-学习分</option>
+                    <option value="betting-live">[对赌]-生活分</option>
                   </select>
               </div>
           </div>

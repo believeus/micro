@@ -35,51 +35,19 @@ public class TaskInit implements ApplicationListener<ApplicationEvent> {
 					public void run() {
 						String begintime=new SimpleDateFormat("yyyy-MM-dd 00:00:00").format(new Date());
 						String endtime=new SimpleDateFormat("yyyy-MM-dd 11:00:00").format(new Date());
-						List<Tuser> userList = (List<Tuser>) service.findObjectList(Tuser.class, "status", "考核期");
+						String hql="from Tuser where status  in ('考核期','缓冲期') or (status='学习期' and learnValue < 700) ";
+						List<Tuser> userList = (List<Tuser>) service.findObjectList(hql);
 						Tuser user = (Tuser) service.findObject(Tuser.class, 1);
 						// 考核期的学员,一天要问三个问题
 						for (Tuser aidUser : userList) {
-							for (int i = 0; i < 3; i++) {
-								Ttask task = new Ttask(user, "betting", 2,aidUser,"任务已被指派");
-								task.setBegintime(begintime);
-								task.setEndtime(endtime);
-								service.merge(task);
-							}
-
-						}
-						// 缓冲期的学员一天要问2个问题
-						userList = (List<Tuser>) service.findObjectList(Tuser.class, "status", "缓冲期");
-						for (Tuser aidUser : userList) {
-							for (int i = 0; i < 2; i++) {
-								Ttask task = new Ttask(user, "betting", 2,aidUser,"任务已被指派");
-								task.setBegintime(begintime);
-								task.setEndtime(endtime);
-								service.merge(task);
-							}
-
-						}
-						// 在学习期,并且分数小于500分的的需要问3个问题
-						String hql = "from Tuser u where u.status='学习期' and u.learnValue < 500";
-						userList = (List<Tuser>) service.findObjectList(hql);
-						for (Tuser aidUser : userList) {
-							for (int i = 0; i < 3; i++) {
-								Ttask task = new Ttask(user, "betting", 2,aidUser,"任务已被指派");
-								task.setBegintime(begintime);
-								task.setEndtime(endtime);
-								service.merge(task);
-							}
-						}
-						// 在学习期,并且分数在500到700之间的需要问1个问题
-						hql = "from Tuser u where u.status='学习期' and u.learnValue >= 500 and u.learnValue <=700";
-						userList = (List<Tuser>) service.findObjectList(hql);
-						for (Tuser aidUser : userList) {
-							Ttask task = new Ttask(user, "betting", 2,aidUser,"任务已被指派");
+							Ttask task = new Ttask(user, "betting-learn", 2,aidUser,"任务已被指派");
 							task.setBegintime(begintime);
 							task.setEndtime(endtime);
 							service.merge(task);
+
 						}
 					}
-				}, 2000, 60000000);
+				}, 1000, 60000000);
 			}
 
 		}

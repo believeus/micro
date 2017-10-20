@@ -35,15 +35,14 @@ public class Trole extends TbaseEntity{
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	
+
 	@OneToOne(mappedBy = "role")
-	public Tuser getAdmin() {
+	public Tuser getUser() {
 		return user;
 	}
-	public void setAdmin(Tuser user) {
+	public void setUser(Tuser user) {
 		this.user = user;
 	}
-	
 	public String getDescription() {
 		return description;
 	}

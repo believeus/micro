@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li>
                         <a _href="admin/event/list.jhtml">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>设置积分</cite>
+                            <cite>管理条例</cite>
                         </a>
                     </li >
                 </ul>

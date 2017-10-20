@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <button class="layui-btn" onclick="x_admin_show('添加悬赏','admin/task/addview.jhtml',350,550)"><i class="layui-icon"></i>添加悬赏分</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
-      <table class="layui-table">
+      <table class="layui-table" lay-filter="table">
         <thead>
           <tr>
           	<th>发布任务人</th>
@@ -64,11 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<td><span>${task.user.username}</span></td>
         		<td>
         			<c:choose>
-        				<c:when test="${task.title ==null}"><span style="color: #30A89D;">请编写您的问题?</span></c:when>
+        				<c:when test="${task.title ==null}">
+        					<a href="javascript:;" onclick="x_admin_show('更改密码','admin/task/editQ.jhtml?taskId=${task.id}',500,200)" style="color: #30A89D;">老师编写学生询问的问题</a>
+        				</c:when>
         				<c:otherwise><span>${task.title}</span></c:otherwise>
         			</c:choose>
         		</td>
-        		<td><span><c:choose><c:when test="${task.type=='live'}">生活分</c:when><c:when test="${task.type=='learn'}">学习分</c:when><c:otherwise>对赌积分</c:otherwise></c:choose></span></td>
+        		<td><span><c:choose><c:when test="${task.type=='live'}">生活分</c:when><c:when test="${task.type=='learn'}">学习分</c:when><c:otherwise>学习任务对赌分</c:otherwise></c:choose></span></td>
         		<td><span>${task.begintime}</span></td>
         		<td><span>${task.endtime}</span></td>
         		<td><span>${task.value}</span></td>
@@ -88,10 +90,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<td>
         			<c:choose>
         				<c:when test="${task.status eq '任务已被指派' }">
-        					<span>${task.aidUser.truename}</span>
+        					<span>${task.aidUser.truename}[学:${task.aidUser.learnValue}][生:${task.aidUser.liveValue}]</span>
         				</c:when>
         			    <c:when test="${sessionScope.sessionUser.id == task.user.id }">
-        					<a href="javascript:;">[不能认领自己发布的任务]</a>
+        					<a href="javascript:;">[自己不能认领]</a>
         				</c:when>
         				<c:when test="${sessionScope.sessionUser.id != task.user.id &&task.aidUser ==null }">
         					<a href="javascript:;" onclick="icandoIt(${task.id},${sessionScope.sessionUser.id })">[申请认领该任务]</a>
@@ -111,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		           			<a title="编辑"  onclick="x_admin_show('编辑','admin/task/editview.jhtml?taskId=${task.id}',600,500)" href="javascript:;">[编辑任务]</a>
 						</c:when>
 						<c:when test="${sessionScope.sessionUser.id == task.user.id && task.aidUser!=null}">
-							<a title="编辑"  onclick="x_admin_show('编辑','admin/task/taskstatus.jhtml?taskId=${task.id}',600,500)" href="javascript:;">${task.status}</a>
+							<a title="编辑"  onclick="x_admin_show('编辑','admin/task/taskstatus.jhtml?taskId=${task.id}',400,350)" href="javascript:;">${task.status}</a>
 						</c:when>
 						<c:otherwise>
 		          			<span>[无权查看]</span>
@@ -155,6 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
       });
      
+ 
 
       /*用户-删除*/
       function del(obj,id){

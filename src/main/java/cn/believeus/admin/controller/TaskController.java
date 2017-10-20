@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.believeus.model.Trole;
 import cn.believeus.model.Ttask;
 import cn.believeus.model.Tuser;
 import cn.believeus.model.TuserEvent;
@@ -72,53 +73,74 @@ public class TaskController {
 	String updatestatus(@ModelAttribute("task") Ttask task) {
 		// 获得任务发布者
 		Tuser user = task.getUser();
+		Trole role = user.getRole();
 		Tuser aidUser = task.getAidUser();
 		TuserEvent userEvent = new TuserEvent();
 		Integer value = task.getValue();
 		String type = task.getType();
-		
-		if(type.equals("live")){
+		if(type.equals("reward-live")||type.equals("assign-live")){
+			type="live";
 			if(task.getStatus().equals("该任务未完成")){
 				aidUser.setLiveValue(aidUser.getLiveValue() - value);
 				userEvent.setValue((-value));
-			}else if(task.getStatus().equals("任务酌情给分")){
+			//酌情给分和任务完成
+			}else{
 				//如果是管理员发布的任务,管理员不减分,并且给接受任务的人加分
-				if(user.getRole().getRoleName().equals("admin")){
+				if(!role.getRoleName().equals("admin")){
 					user.setLiveValue(user.getLiveValue() - value);
 				}
 				aidUser.setLiveValue(aidUser.getLiveValue() + value);
 				userEvent.setValue(value);
 			}
 		//添加学习分
-		}else if(type.equals("learn")) {
+		}else if(type.equals("reward-learn")||type.equals("assign-learn")) {
+			type="learn";
 			if(task.getStatus().equals("该任务未完成")){
 				aidUser.setLearnValue(aidUser.getLearnValue() - value);
 				userEvent.setValue((-value));
-			//酌情给分
-			}else if(task.getStatus().equals("任务酌情给分")){
+			//酌情给分和任务完成
+			}else {
 				//如果是管理员发布的任务,管理员不减分
-				if(user.getRole().getRoleName().equals("admin")){
+				if(!role.getRoleName().equals("admin")){
 					user.setLearnValue(user.getLearnValue() - value);
 				}
 				aidUser.setLearnValue(aidUser.getLearnValue() + value);
 				userEvent.setValue(value);
 			}
 		//对赌积分,完成任务加分,完成不了任务扣分
-		}else if(type.equals("betting")){
+		}else if(type.equals("betting-learn")){
+			//学习任务完成,转换成学习分
+			type="learn";
 			if(task.getStatus().equals("该任务未完成")){
 				aidUser.setLearnValue(aidUser.getLearnValue() - value);
 				userEvent.setValue((-value));
-			}else if(task.getStatus().equals("任务已经完成")){
+			//酌情给分和任务完成
+			}else{
 				//如果是管理员发布的任务,管理员不减分
-				if(user.getRole().getRoleName().equals("admin")){
+				if(!role.getRoleName().equals("admin")){
 					user.setLearnValue(user.getLearnValue() - value);
 				}
 				aidUser.setLearnValue(aidUser.getLearnValue() + value);
 				userEvent.setValue(value);
 			}
+		}else if(type.equals("betting-live")){
+			//学习任务完成,转换成学习分
+			type="live";
+			if(task.getStatus().equals("该任务未完成")){
+				aidUser.setLiveValue(aidUser.getLiveValue()- value);
+				userEvent.setValue((-value));
+			}else if(task.getStatus().equals("任务已经完成")){
+				//如果是管理员发布的任务,管理员不减分
+				if(!role.getRoleName().equals("admin")){
+					user.setLearnValue(user.getLiveValue() - value);
+				}
+				aidUser.setLearnValue(aidUser.getLiveValue() + value);
+				userEvent.setValue(value);
+			}
 		}
+		
 		// 如果不是管理员则给救助者减分
-		if(user.getRole().getRoleName().equals("admin")){
+		if(!role.getRoleName().equals("admin")){
 			service.saveOrUpdate(user);
 		}
 		service.saveOrUpdate(aidUser);
@@ -168,6 +190,22 @@ public class TaskController {
 		Tuser aidUser = (Tuser) service.findObject(Tuser.class, aidUserId);
 		task.setAidUser(aidUser);
 		task.setStatus("任务已被认领");
+		service.saveOrUpdate(task);
+		return "true";
+	}
+	
+	@RequestMapping("/admin/task/editQ")
+	public ModelAndView editQView(String taskId){
+		ModelAndView modelView=new ModelAndView();
+		modelView.addObject("taskId", taskId);
+		modelView.setViewName("/WEB-INF/back/task/taskQ.jsp");
+		return modelView;
+	}
+	
+	@RequestMapping("/admin/task/upQ")
+	public @ResponseBody String upQ(int taskId,String title){
+		Ttask task= (Ttask)service.findObject(Ttask.class, taskId);
+		task.setTitle(title);
 		service.saveOrUpdate(task);
 		return "true";
 	}

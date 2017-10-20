@@ -75,8 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        		</td>
 	        		<td><date:date value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
 	        		<td><span>${user.status}</span></td>
-	        		<td><span>${user.liveValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=live',850,500)" >&nbsp;&nbsp;[生活积分详情]</a></td>
-	        		<td><span>${user.learnValue}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=learn',850,500)" >&nbsp;&nbsp;[学习积分详情]</a></td>
+	        		<td><span>${user.liveValue}</span><a href="javascript:;" onclick="x_admin_show('生活积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=live',850,500)" >&nbsp;&nbsp;[生活积分详情]</a></td>
+	        		<td><span>${user.learnValue}</span><a href="javascript:;" onclick="x_admin_show('学习积分详情','admin/studn/doneView.jhtml?userId=${user.id}&type=learn',850,500)" >&nbsp;&nbsp;[学习积分详情]</a></td>
 	        		<td class="td-manage">
 	        			 <a title="编辑"  onclick="x_admin_show('编辑','admin/studn/editView.jhtml?id=${user.id}',400,580)" href="javascript:;">[编辑]</a>
 		        		 <c:if test="${sessionScope.sessionUser.username eq 'admin'}">

@@ -25,7 +25,8 @@ public class ReviewController {
 	@RequestMapping("/admin/review/list")
 	public ModelAndView list() {
 		ModelAndView modelView = new ModelAndView();
-		List<?> userEventList = service.findObjectList(TuserEvent.class, 10);
+		String hql="from TuserEvent e where e.type in ('rule-live','rule-learn')";
+		List<?> userEventList = service.findObjectList(hql, 10);
 		modelView.addObject("userEventList", userEventList);
 		modelView.setViewName("/WEB-INF/back/review/reviewlist.jsp");
 		return modelView;

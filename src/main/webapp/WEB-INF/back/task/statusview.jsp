@@ -39,15 +39,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <input type="text" value="${task.title}" readonly="readonly" name="title" lay-verify="required" autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div id=form-value class="layui-form-item" style="display: none;">
-              <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>积分值
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" value="${task.value}"  name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div id="form-value" class="layui-form-item" style="display: none;">
+         
+          <div  class="layui-form-item" style="display: none;">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>开始日期
               </label>
@@ -55,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <input class="layui-input" readonly="readonly" value="${task.begintime}" placeholder="开始日" name="begintime" id="begintime">
               </div>
           </div>
-          <div id="form-value" class="layui-form-item"  style="display: none;">
+          <div  class="layui-form-item"  style="display: none;">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>结束日期
               </label>
@@ -70,13 +63,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="layui-input-inline">
                   <select lay-filter="select"  name="status" class="valid">
                     <option value="任务已经完成">任务已经完成</option>
-                    <c:if test="${task.type ne 'betting'}">
-                    	<option value="任务酌情给分">任务酌情给分</option>
-                    </c:if>
-                    <c:if test="${task.type eq 'betting'}">
-                    	<option value="该任务未完成">该任务未完成</option>
-                    </c:if>
+                    <option value="任务酌情给分">任务酌情给分</option>
+                    <option value="该任务未完成">该任务未完成</option>
                   </select>
+              </div>
+          </div>
+             <div id="form-value" class="layui-form-item" style="display: none;">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>积分值
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="${task.value}"  name="value" lay-verify="required|number" autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item" style="display: none;" >
@@ -119,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           });
           
           form.on('select(select)', function(data){
-        	  if(data.value=="酌情给分"){
+        	  if(data.value=="任务酌情给分"){
         		  $("#form-value").show();
         	  }else{
         		  $("#form-value").hide();

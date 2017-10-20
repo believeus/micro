@@ -50,8 +50,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </label>
               <div class="layui-input-inline">
                   <select lay-filter="select"  name="type" class="valid">
-                    <option value="live">生活分</option>
-                    <option value="learn">学习分</option>
+                    <option value="rule-live">生活管理条例分</option>
+                    <option value="rule-learn">学习管理条例分</option>
                   </select>
               </div>
           </div>
@@ -133,7 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           
           form.on('select(select)', function(data){
         	  $("#typeName option").remove();
-        	  if(data.value=="live"){
+        	  if(data.value=="rule-live"){
         		 $("#typeName").append("<option value='减分项:生活状态管理条例'>减分项:生活状态管理条例</option>");
         		 $("#typeName").append("<option value='加分项:生活状态管理条例'>加分项:生活状态管理条例</option>");
         		 $("#typeName").append("<option value='减分项:住宿区域管理条例'>减分项:住宿区域管理条例</option>");
