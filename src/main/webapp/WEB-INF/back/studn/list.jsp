@@ -48,6 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table class="layui-table">
         <thead>
           <tr>
+          	<th>用户编号</th>
             <th>用户名</th>
             <th>性别</th>
             <th>用户角色</th>
@@ -61,6 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <tbody>
         <c:forEach var="user" items="${userlist}">
         		<tr>
+        			<td><span>${user.id}</span></td>
 	        		<td><span>${user.truename}</span></td>
 	        		<td><span>${user.sex}</span></td>
 	        		<td>
