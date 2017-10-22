@@ -17,8 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="static/public/css/font.css">
     <link rel="stylesheet" href="static/public/css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/public/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/public/lib/layui/layui.all.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
+  
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -53,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <span class="x-red">*</span>类型
               </label>
               <div class="layui-input-inline">
-                  <select  name="typeName" class="valid">
+                  <select  id="typeName" name="typeName" class="valid">
                      <option value="加分项:住宿区域管理条例">加分项:住宿区域管理条例</option>
                      <option value="加分项:生活状态管理条例">加分项:生活状态管理条例</option>
                      <option value="减分项:住宿区域管理条例">减分项:住宿区域管理条例</option>
@@ -88,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           var $ = layui.jquery;
           var form = layui.form;
           var layer = layui.layer;
-         
+          form.render();
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php

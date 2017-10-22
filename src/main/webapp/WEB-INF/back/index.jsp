@@ -24,13 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="static/public/lib/layui/layui.all.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
 	 <script>
-	 $(function(){
-		 layui.use(['form','element'],
-				    function() {
-				       layer = layui.layer;
-				       element = layui.element;
-				    });
-	 });
+	
     </script>
 </head>
 <body>

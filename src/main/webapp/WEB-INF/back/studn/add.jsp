@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="static/public/lib/layui/css/modules/laydate/default/laydate.css">
     <link rel="stylesheet" href="static/public/css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/public/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/public/lib/layui/layui.all.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
@@ -116,30 +116,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </form>
     </div>
     <script>
-        layui.use(['form','layer'], function(){
-          var $ = layui.jquery;
-          var form = layui.form;
-          var layer = layui.layer;
-         
-          //监听提交
-          form.on('submit(add)', function(data){
-            //发异步，把数据提交给php
-            $.post("admin/studn/update.jhtml",data.field,function(data){
-            	layer.alert("增加成功", {icon: 6},function () {
-                    // 获得frame索引
-                    var index = parent.layer.getFrameIndex(window.name);
-                    //关闭当前frame
-                    parent.layer.close(index);
-                    parent.location.reload();
-                });
-            });
-            
-            return false;
-          });
-          
-          
-          
-        });
+     $(function(){
+    	   layui.use(['form','layer'], function(){
+    	          var $ = layui.jquery;
+    	          var form = layui.form;
+    	          form.render();
+    	         
+    	          //监听提交
+    	          form.on('submit(add)', function(data){
+    	            //发异步，把数据提交给php
+    	            $.post("admin/studn/update.jhtml",data.field,function(data){
+    	            	layer.alert("增加成功", {icon: 6},function () {
+    	                    // 获得frame索引
+    	                    var index = parent.layer.getFrameIndex(window.name);
+    	                    //关闭当前frame
+    	                    parent.layer.close(index);
+    	                    parent.location.reload();
+    	                });
+    	            });
+    	            
+    	            return false;
+    	          });
+    	          
+    	          
+    	          
+    	        });
+    	 
+     });
+     
     </script>
     
   </body>
