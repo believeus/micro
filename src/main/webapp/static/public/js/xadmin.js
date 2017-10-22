@@ -1,11 +1,10 @@
 $(function () {
     //加载弹出层
-    layui.use(['form','element'],
-    function() {
-        layer = layui.layer;
-        element = layui.element;
-    });
-
+	/*layui.use(['form','element'],
+		    function() {
+		       layer = layui.layer;
+		       element = layui.element;
+	});*/
     //触发事件
   var tab = {
         tabAdd: function(title,url,id){
@@ -150,6 +149,8 @@ function x_admin_show(title,url,w,h){
     if (h == null || h == '') {
         h=($(window).height() - 50);
     };
+    
+  //加载弹出层
     layer.open({
         type: 2,
         area: [w+'px', h +'px'],

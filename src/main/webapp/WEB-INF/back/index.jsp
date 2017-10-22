@@ -17,11 +17,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="static/public/css/font.css">
-	<link rel="stylesheet" href="static/public/css/xadmin.css">
+    <link rel="stylesheet" href="static/public/css/xadmin.css">
+    <link rel="stylesheet" href="static/public/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="static/public/lib/layui/css/modules/layer/default/layer.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="static/public/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/public/lib/layui/layui.all.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
-
+	 <script>
+	 $(function(){
+		 layui.use(['form','element'],
+				    function() {
+				       layer = layui.layer;
+				       element = layui.element;
+				    });
+	 });
+    </script>
 </head>
 <body>
     <!-- 顶部开始 -->
@@ -130,6 +140,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="copyright">Copyright ©2017 广州大悟智课网络科技有限责任公司 v2.3 All Rights Reserved</div>  
     </div>
     <!-- 底部结束 -->
-    
+   
 </body>
 </html>

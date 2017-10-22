@@ -15,6 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="static/public/css/font.css">
+    <link rel="stylesheet" href="static/public/lib/layui/css/modules/laydate/default/laydate.css">
     <link rel="stylesheet" href="static/public/css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="static/public/lib/layui/layui.js" charset="utf-8"></script>
@@ -52,6 +53,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="layui-input-inline">
                   <input id="L_pass" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
               </div>
+          </div>
+          <div>
+          	
           </div>
            <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">

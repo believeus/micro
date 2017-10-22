@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
           </div>
            <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
+              <label  class="layui-form-label">
                   <span class="x-red">*</span>分类
               </label>
               <div class="layui-input-inline">
@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
           </div>
           <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
+              <label class="layui-form-label">
                   <span class="x-red">*</span>类型
               </label>
               <div class="layui-input-inline">
