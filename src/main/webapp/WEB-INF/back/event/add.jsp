@@ -89,7 +89,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           var $ = layui.jquery;
           var form = layui.form;
           var layer = layui.layer;
-          form.render();
           //监听提交
           form.on('submit(add)', function(data){
             //发异步，把数据提交给php
@@ -122,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	  form.render();
         	  return false;
         	});
-          
+          form.render();
         });
     </script>
   </body>

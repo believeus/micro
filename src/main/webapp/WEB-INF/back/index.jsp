@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="static/public/lib/layui/css/layui.css">
     <link rel="stylesheet" href="static/public/lib/layui/css/modules/layer/default/layer.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/public/lib/layui/layui.all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/public/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/public/js/xadmin.js"></script>
 	 <script>
 	
