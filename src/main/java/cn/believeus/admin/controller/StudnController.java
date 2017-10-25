@@ -1,9 +1,12 @@
 package cn.believeus.admin.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.believeus.PaginationUtil.Page;
+import cn.believeus.PaginationUtil.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,9 +24,9 @@ public class StudnController {
 	private MySQLService service;
 	
 	@RequestMapping("/admin/studn/list")
-	public ModelAndView list(){
+	public ModelAndView list(Pageable pageable){
 		ModelAndView modelView=new ModelAndView();
-		List<?> userlist = service.findObjectList(Tuser.class, 15);
+		Page<?> userlist = service.findObjectPage(Tuser.class, pageable);
 		modelView.addObject("userlist", userlist);
 		modelView.setViewName("/WEB-INF/back/studn/list.jsp");
 		return modelView;
@@ -46,6 +49,8 @@ public class StudnController {
 	@RequestMapping("/admin/studn/update")
 	public @ResponseBody String update(Tuser user){
 		service.saveOrUpdate(user);
+		byte b = 1;
+		System.out.println(b==1);
 		return "true";
 	}
 	
@@ -56,10 +61,10 @@ public class StudnController {
 	}
 	
 	@RequestMapping("/admin/studn/doneView")
-	public ModelAndView doneView(int userId,String type){
+	public ModelAndView doneView(int userId,String type,Pageable pageable){
 		ModelAndView modelView=new ModelAndView();
 		String hql="from TuserEvent e where e.userId="+userId+" and type='"+type+"'";
-		List<?> userEventList=service.findObjectList(hql, 10);
+		Page<?> userEventList = service.findObjectPage(TuserEvent.class, pageable);
 		modelView.setViewName("/WEB-INF/back/studn/eventlist.jsp");
 		modelView.addObject("userEventList", userEventList);
 		modelView.addObject("userId", userId);
@@ -67,9 +72,9 @@ public class StudnController {
 	}
 	
 	@RequestMapping("/admin/studn/eventView")
-	public ModelAndView eventView(int userId){
+	public ModelAndView eventView(int userId,Pageable pageable){
 		ModelAndView modelView=new ModelAndView();
-		List<?> eventList = service.findObjectList(Tevent.class, 8);
+		Page<?> eventList = service.findObjectPage(Tevent.class, pageable);
 		modelView.setViewName("/WEB-INF/back/studn/bindevent.jsp");
 		modelView.addObject("eventList",eventList);
 		modelView.addObject("userId", userId);
@@ -139,5 +144,20 @@ public class StudnController {
 		modelview.setViewName("/WEB-INF/back/studn/uppassswd.jsp");
 		modelview.addObject("user", user);
 		return modelview;
+	}
+
+	public static String test(){
+		try {
+			new BigDecimal("ss");
+			return "try";
+		}catch (Exception e){
+			return "catch";
+		}finally {
+			return "finally";
+		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(test());
 	}
 }

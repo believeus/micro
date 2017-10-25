@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </tr>
         </thead>
         <tbody>
-	      <c:forEach var="event" items="${eventList}">
+	      <c:forEach var="event" items="${eventList.content}">
 	        <tr>
 	            <td>${event.title}</td>
 	            <td>${event.typeName}</td>
@@ -87,17 +87,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">4</a>
-          <a class="num" href="">5</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
         </div>
       </div>
-
+        <script type="text/javascript">
+            var url = 'admin/event/list.jhtml?pageNumber=';
+            var totalPage = "${eventList.totalPages}";
+            var pageNumber = "${eventList.pageNumber}";
+            initPage(url,totalPage,pageNumber);
+        </script>
     </div>
     <script>
       /*用户-删除*/

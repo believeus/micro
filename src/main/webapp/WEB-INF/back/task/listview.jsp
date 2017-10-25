@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            </tr>
         </thead>
         <tbody>
-        <c:forEach var="task" items="${tasklist}" varStatus="status">
+        <c:forEach var="task" items="${tasklist.content}" varStatus="status">
         	<tr>
         		<td><span>${task.user.username}</span></td>
         		<td>
@@ -139,17 +139,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">4</a>
-          <a class="num" href="">5</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
         </div>
       </div>
 
+        <script type="text/javascript">
+            var url = 'admin/task/list.jhtml?pageNumber=';
+            var totalPage = "${tasklist.totalPages}";
+            var pageNumber = "${tasklist.pageNumber}";
+            initPage(url,totalPage,pageNumber);
+        </script>
     </div>
     <script>
       layui.use('laydate', function(){

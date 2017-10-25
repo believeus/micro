@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          </tr>
 			        </thead>
                     <tbody>
-                     <c:forEach var="userEvent" items="${userEventList}">
+                     <c:forEach var="userEvent" items="${userEventList.content}">
                      	<tr>
                         <td><span>${userEvent.title}</span></td>
                         <td><span>${userEvent.type=="live"?"生活分":"学习分"}</span></td>
@@ -74,16 +74,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </table>
                   <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">4</a>
-          <a class="num" href="">5</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
+
         </div>
       </div>
+                  <script type="text/javascript">
+                      var url = 'admin/studn/doneView.jhtml?pageNumber=';
+                      var totalPage = "${userEventList.totalPages}";
+                      var pageNumber = "${userEventList.pageNumber}";
+                      initPage(url,totalPage,pageNumber);
+                  </script>
               </div>
           </div>
     </div>

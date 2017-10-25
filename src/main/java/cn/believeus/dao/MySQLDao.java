@@ -317,5 +317,23 @@ public class MySQLDao extends HibernateDaoSupport {
 		});
 	}
 
+	public Page<?> findObjectPage(final Class<?> clazz, final Pageable pageable){
+		return (Page<?>) getHibernateTemplate().execute(
+				new HibernateCallback<Object>() {
+
+
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						String hql = "from " + clazz.getName()+ " as entity";
+						Query query = session.createQuery(hql);
+						int total = query.list().size();
+						query.setFirstResult((pageable.getPageNumber()-1)*pageable.getPageSize());
+						query.setMaxResults(pageable.getPageSize());
+						List<?> list = query.list();
+						return new Page(list,(int)total,pageable);
+					}
+				});
+	}
+
 
 }

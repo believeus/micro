@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.believeus.PaginationUtil.Page;
+import cn.believeus.PaginationUtil.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,9 +20,9 @@ public class EventController {
 	private MySQLService service;
 	
 	@RequestMapping("/admin/event/list")
-	public ModelAndView listView(){
+	public ModelAndView listView(Pageable pageable){
 		ModelAndView modelView=new ModelAndView();
-		List<?> eventList = service.findObjectList(Tevent.class, 15);
+		Page eventList = service.findObjectPage(Tevent.class, pageable);
 		modelView.setViewName("/WEB-INF/back/event/list.jsp");
 		modelView.addObject("eventList", eventList);
 		return modelView;

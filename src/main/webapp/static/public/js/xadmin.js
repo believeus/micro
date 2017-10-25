@@ -169,4 +169,34 @@ function x_admin_close(){
     parent.layer.close(index);
 }
 
+/*加载分页*/
+function initPage(url,totalPage, pageNumber) {
+    totalPage = parseInt(totalPage);
+    pageNumber = parseInt(pageNumber);
+    var prev = pageNumber - 1;
+    var prevSpan = "";
+    if( prev <= 0 ){
+        prevSpan = '<span class="prev">&lt;&lt;</span>';
+    }else{
+        prevSpan = '<a class="prev" href="'+url+prev+'">&lt;&lt;</a>';
+    }
+    var next = pageNumber + 1;
+    var nextSpan = "";
+    if( next > totalPage ){
+        nextSpan = '<span class="next">&gt;&gt;</span>';
+    }else{
+        nextSpan = '<a class="next" href="'+url+next+'">&gt;&gt;</a>';
+    }
+    var pageDiv = prevSpan;
+    for( var i = 1; i <= totalPage; i++ ){
+        if(i == pageNumber){
+            pageDiv = pageDiv + '<span class="current">'+pageNumber+'</span>';
+        }else{
+            pageDiv = pageDiv + '<a class="num" href="'+url+i+'">'+i+'</a>';
+        }
+    }
+    var pageDiv = pageDiv + nextSpan;
+    $(".page div").html(pageDiv);
+}
+
 

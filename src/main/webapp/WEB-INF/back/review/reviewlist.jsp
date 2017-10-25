@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	           </tr>
 	        </thead>
 	        <tbody>
-		        <c:forEach var="userEvent" items="${userEventList}">
+		        <c:forEach var="userEvent" items="${userEventList.content}">
 		        	<tr>
 		        		<td><span>${userEvent.truename}</span><a href="javascript:;" onclick="x_admin_show('积分详情','admin/studn/doneView.jhtml?userId=${userEvent.userId}',850,500)" >&nbsp;&nbsp;[积分详情]</a></td>
 		        		<td><span>${userEvent.title}</span></td>
@@ -99,17 +99,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">4</a>
-          <a class="num" href="">5</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
         </div>
       </div>
-
+          <script type="text/javascript">
+              var url = 'admin/review/list.jhtml?pageNumber=';
+              var totalPage = "${userEventList.totalPages}";
+              var pageNumber = "${userEventList.pageNumber}";
+              initPage(url,totalPage,pageNumber);
+          </script>
     </div>
     <script>
 	 function del(obj,userEventId){

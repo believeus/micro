@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.believeus.PaginationUtil.Page;
+import cn.believeus.PaginationUtil.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +25,10 @@ public class ReviewController {
 	private MySQLService service;
 
 	@RequestMapping("/admin/review/list")
-	public ModelAndView list() {
+	public ModelAndView list(Pageable pageable) {
 		ModelAndView modelView = new ModelAndView();
 		String hql="from TuserEvent e where e.type in ('rule-live','rule-learn')";
-		List<?> userEventList = service.findObjectList(hql, 10);
+		Page<?> userEventList = service.findObjectPage(TuserEvent.class, pageable);
 		modelView.addObject("userEventList", userEventList);
 		modelView.setViewName("/WEB-INF/back/review/reviewlist.jsp");
 		return modelView;

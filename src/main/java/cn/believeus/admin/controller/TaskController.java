@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cn.believeus.PaginationUtil.Page;
+import cn.believeus.PaginationUtil.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,9 +30,9 @@ public class TaskController {
 	private MySQLService service;
 
 	@RequestMapping("/admin/task/list")
-	public ModelAndView list() {
+	public ModelAndView list(Pageable pageable) {
 		ModelAndView modelView = new ModelAndView();
-		List<?> taskList = service.findObjectList(Ttask.class, 10);
+		Page<?> taskList = service.findObjectPage(Ttask.class, pageable);
 		modelView.addObject("tasklist", taskList);
 		modelView.setViewName("/WEB-INF/back/task/listview.jsp");
 		return modelView;

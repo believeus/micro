@@ -101,4 +101,8 @@ public class MySQLService{
 		return (Page<?>) mysqlDao.getPageDateList(hql,pageable );
 	}
 
+	public Page<?> findObjectPage(Class<?> clazz, Pageable pageable){
+	 	return mysqlDao.findObjectPage(clazz, pageable);
+	}
+
 }

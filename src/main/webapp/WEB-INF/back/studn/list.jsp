@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            </tr>
         </thead>
         <tbody>
-        <c:forEach var="user" items="${userlist}">
+        <c:forEach var="user" items="${userlist.content}">
         		<tr>
         			<td><span>${user.id}</span></td>
 	        		<td><span>${user.truename}</span></td>
@@ -107,16 +107,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">4</a>
-          <a class="num" href="">5</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
         </div>
       </div>
+        <script type="text/javascript">
+            var url = 'admin/studn/list.jhtml?pageNumber=';
+            var totalPage = "${userlist.totalPages}";
+            var pageNumber = "${userlist.pageNumber}";
+            initPage(url,totalPage,pageNumber);
+        </script>
 
     </div>
     <script>
