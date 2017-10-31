@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="date" uri="/WEB-INF/lib/datetag.tld"%>  
+<%@ taglib prefix="date" uri="/tag/datetag.tld"%>  
 <!DOCTYPE html>
 <html>
   
