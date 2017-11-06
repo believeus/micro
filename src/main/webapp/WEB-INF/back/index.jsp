@@ -66,6 +66,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </a>
                     </li >
                   
+                   <li>
+                        <a _href="admin/studn/list.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>学员学习进度管理</cite>
+                            
+                        </a>
+                    </li >
+                </ul>
+            </li>
+             <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>课程管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="admin/course/category.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>课程分类</cite>
+                            
+                        </a>
+                    </li >
+                     <li>
+                        <a _href="admin/studn/list.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>课程试题</cite>
+                            
+                        </a>
+                    </li >
+                   <li>
+                        <a _href="admin/course/list.jhtml">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>课程内容</cite>
+                            
+                        </a>
+                    </li >
                 </ul>
             </li>
             <c:if test="${sessionScope.sessionUser.username eq 'admin'}">
